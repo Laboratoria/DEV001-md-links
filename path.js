@@ -9,8 +9,16 @@ const getAbsolutePath = (paths) => {
   return path.isAbsolute(paths) ? paths : path.resolve(paths);
 };
 
+const isFileMd = (pathAbsolute) => {
+  const filePath = path.extname(pathAbsolute);
+  if (filePath === '.md') {
+    return true;
+  }
+  return false;
+};
 
 module.exports = {
   isPathExist,
-  getAbsolutePath
+  getAbsolutePath,
+  isFileMd
 };
