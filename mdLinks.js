@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 
 const mdLinks = (path,options) => {
   //resolve(resuelto) cuando se resuelve la promesa, y reject no, 
@@ -18,7 +17,7 @@ const mdLinks = (path,options) => {
   reject('la ruta no existe')
     }
   });
-
+  
 }
 
 module.exports = {
