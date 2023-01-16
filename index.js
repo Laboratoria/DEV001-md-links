@@ -1,13 +1,15 @@
 const { 
-  isPathExist,
+  pathExist,
   getAbsolutePath,
-  isFileMd
+  isFileMd,
+  readFile
 } = require('./path.js')
 
 const mdLinks = (path, options) => new Promise((resolve, reject) => {
   // identificar si la ruta existe
-  if (!isPathExist(path)) {
+  if (!pathExist(path)) {
     // si no existe la ruta, rechaza la promesa
+    console.log('la ruta no existe');
     return reject('La ruta no existe');
     
   } else {
@@ -16,6 +18,10 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
     // chequear si la ruta es un archivo md
     if (!isFileMd(pathAbsolute)) {
       return reject('No es un archivo md')
+    } else {
+      //leer los archivos md
+      console.log(readFile(pathAbsolute));
+      return readFile(pathAbsolute);
     }
     // identificar si es un archivo o un directorio
     // si es un directorio, leer el directorio
