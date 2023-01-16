@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // identifica si la ruta existe o no
-const isPathExist = (param) => fs.existsSync(param);
+const pathExist = (param) => fs.existsSync(param);
 
 // chequear o convertir a ruta absoluta
 const getAbsolutePath = (paths) => {
@@ -17,8 +17,15 @@ const isFileMd = (pathAbsolute) => {
   return false;
 };
 
+const readFile = (pathsMd) => {
+  if (pathsMd === true) {
+    return fs.readFileSync(pathsMd, 'utf-8');
+  }
+};
+
 module.exports = {
-  isPathExist,
+  pathExist,
   getAbsolutePath,
-  isFileMd
+  isFileMd,
+  readFile
 };
