@@ -20,8 +20,7 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
       return reject('No es un archivo md')
     } else {
       //leer los archivos md
-      console.log(readFile(pathAbsolute));
-      return readFile(pathAbsolute);
+      readFile(pathAbsolute);
     }
     // identificar si es un archivo o un directorio
     // si es un directorio, leer el directorio
