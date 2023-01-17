@@ -49,7 +49,7 @@ const fileMd = (pathReceived) => {
 };
 // Leer el contenido de un archivo
 const readFiles = (pathReceived) => {
-  fs.readFile(pathReceived, "utf-8", (error, contenido) => {
+  return fs.readFile(pathReceived, "utf-8", (error, contenido) => {
     if (error) {
       return error;
     } else {
@@ -66,7 +66,7 @@ const readFiles = (pathReceived) => {
           };
           links.push(obj);
         }
-        console.log(links)
+        // console.log(links)
         return links;
       }
     }
@@ -82,9 +82,8 @@ const mdLinks = (path, options) => {
       if (isPathValid(pathAbsolute(path))) {
         if (statDir(pathAbsolute(path))) {
           resolve(readDir(pathAbsolute(path)));
-        }
-        if (statFile(pathAbsolute(path))) {
-          console.log('esta dentro de mdlinks', readFiles(pathAbsolute(path)));
+        }else if (statFile(pathAbsolute(path))) {
+          console.log('leyendo archivos dentro de mdlinks', readFiles(pathAbsolute(path)));
           resolve(readFiles(pathAbsolute(path)));
         }
       } else {

@@ -1,7 +1,7 @@
 const { mdLinks } = require('./index.js');
 
 
-mdLinks('./archivoPrueba/').then((promise)=>{
+mdLinks('./archivoPrueba/prueba.md').then((promise)=>{
    console.log(promise);
 })
 .catch((error) => {
