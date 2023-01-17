@@ -49,7 +49,7 @@ const fileMd = (pathReceived) => {
 };
 // Leer el contenido de un archivo
 const readFiles = (pathReceived) => {
-  return fs.readFile(pathReceived, "utf-8", (error, contenido) => {
+    fs.readFile(pathReceived, "utf-8", (error, contenido) => {
     if (error) {
       return error;
     } else {
@@ -58,6 +58,11 @@ const readFiles = (pathReceived) => {
         const fileParse = md.render(contenido);
         const regExp = /(<a [^>]*(href="([^>^\"]*)")[^>]*>)([^<]+)(<\/a>)/gi;
         let result;
+        if(!pathAbsolute(pathReceived)){
+          pathReceived = pathResult(pathReceived).replace(/\\/g,'/');
+        } else {
+          pathReceived = pathReceived.replace(/\\/g,'/');
+        }
         while ((result = regExp.exec(fileParse)) !== null) {
           const obj = {
             href: result[(0, 3)],
@@ -66,25 +71,26 @@ const readFiles = (pathReceived) => {
           };
           links.push(obj);
         }
-        // console.log(links)
         return links;
-      }
+      } 
     }
   });
 };
 
 //Funcion mdLinks
-const mdLinks = (path, options) => {
+const mdLinks = (pathReceived, options) => {
   return new Promise((resolve, reject) => {
     // Identifica si la ruta existe.
-    if (path) {
+    if (pathReceived) {
+      const pathRela = (pathReceived) => path.isAbsolute(pathReceived);
+      console.log(pathRela(pathReceived));
       // Si existe y es absoluta.
-      if (isPathValid(pathAbsolute(path))) {
-        if (statDir(pathAbsolute(path))) {
-          resolve(readDir(pathAbsolute(path)));
-        }else if (statFile(pathAbsolute(path))) {
+      if (isPathValid(pathAbsolute(pathReceived))) {
+        if (statDir(pathAbsolute(pathReceived))) {
+          resolve(readDir(pathAbsolute(pathReceived)));
+        }else if (statFile(pathAbsolute(pathReceived))) {
           console.log('leyendo archivos dentro de mdlinks', readFiles(pathAbsolute(path)));
-          resolve(readFiles(pathAbsolute(path)));
+          resolve(readFiles(pathAbsolute(pathReceivedh)));
         }
       } else {
         //  Si no existe la ruta se rechaza la promesa.
