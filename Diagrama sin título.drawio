@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-01-16T16:54:39.506Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" etag="YVHfr2UUP0wEg_RCeutC" version="20.8.5" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-17T02:41:39.557Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" etag="Jh7ncW2uYBVhLUvO9sGn" version="20.8.5" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2998" dy="982" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1680" dy="386" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -106,10 +106,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GzxHe0S0takHzzs3fDO5-39" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;strokeColor=#00CC00;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="GzxHe0S0takHzzs3fDO5-50" edge="1">
+        <mxCell id="GzxHe0S0takHzzs3fDO5-39" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;strokeColor=#00CC00;" parent="WIyWlLk6GJQsqaUBKTNV-1" edge="1">
           <mxGeometry x="-0.52" y="25" width="50" height="50" relative="1" as="geometry">
             <mxPoint x="580" y="655" as="sourcePoint" />
-            <mxPoint x="642.99" y="700" as="targetPoint" />
+            <mxPoint x="645" y="730" as="targetPoint" />
             <Array as="points">
               <mxPoint x="645" y="655" />
             </Array>
@@ -119,21 +119,12 @@
         <mxCell id="GzxHe0S0takHzzs3fDO5-42" value="Es un path&amp;nbsp;&lt;br&gt;absoluto?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffff88;strokeColor=#36393d;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="355" y="395" width="125" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="GzxHe0S0takHzzs3fDO5-50" value="&lt;br&gt;Tiene más de un archivo?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffff88;strokeColor=#36393d;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="582.5" y="715" width="125" height="90" as="geometry" />
-        </mxCell>
         <mxCell id="GzxHe0S0takHzzs3fDO5-58" value="Determinar que extensión es" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#36393d;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-150" y="740" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="GzxHe0S0takHzzs3fDO5-59" value="No" style="endArrow=classic;html=1;rounded=0;strokeColor=#CC0000;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="GzxHe0S0takHzzs3fDO5-58" edge="1">
+        <mxCell id="GzxHe0S0takHzzs3fDO5-60" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#0000FF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="GzxHe0S0takHzzs3fDO5-61" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="580" y="760" as="sourcePoint" />
-            <mxPoint x="380" y="744.63" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="GzxHe0S0takHzzs3fDO5-60" value="Si" style="endArrow=classic;html=1;rounded=0;strokeColor=#00CC00;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GzxHe0S0takHzzs3fDO5-50" target="GzxHe0S0takHzzs3fDO5-61" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="680" y="744.63" as="sourcePoint" />
+            <mxPoint x="707.5" y="760" as="sourcePoint" />
             <mxPoint x="950" y="790" as="targetPoint" />
             <Array as="points">
               <mxPoint x="850" y="760" />
@@ -152,11 +143,6 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GzxHe0S0takHzzs3fDO5-66" value="Si" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="GzxHe0S0takHzzs3fDO5-64" vertex="1" connectable="0">
-          <mxGeometry x="-0.2719" relative="1" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="GzxHe0S0takHzzs3fDO5-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#CC0000;fillColor=#f8cecc;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GzxHe0S0takHzzs3fDO5-61" target="GzxHe0S0takHzzs3fDO5-69" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="690" y="830" as="targetPoint" />
@@ -168,7 +154,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GzxHe0S0takHzzs3fDO5-61" value="&lt;br&gt;Tiene más de una directorio?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffff88;strokeColor=#36393d;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="GzxHe0S0takHzzs3fDO5-61" value="Es un&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;directorio?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffff88;strokeColor=#36393d;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="890" y="840" width="120" height="90" as="geometry" />
         </mxCell>
         <mxCell id="GzxHe0S0takHzzs3fDO5-109" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#0000FF;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GzxHe0S0takHzzs3fDO5-69" target="GzxHe0S0takHzzs3fDO5-71" edge="1">
@@ -559,6 +545,9 @@
             <mxPoint x="417.02" y="120" as="sourcePoint" />
             <mxPoint x="417.52" y="170" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="44j3uy6gFAnxvlkVxcrM-0" value="Obtener la lista de rutas dentro directorio”" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#36393d;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="590" y="730" width="120" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
