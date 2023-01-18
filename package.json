@@ -1,6 +1,15 @@
 {
-  "name": "md-links",
+  "name": "md-links-carov",
   "version": "0.1.0",
+  "description": "Librería para buscar links, verificar el estado de validez y obtener estadísticas de archivos tipo md",
+  "author": {
+    "name": "Carolina Velásquez",
+    "email": "carolina.velasquez.rodriguez@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Caro-V/DEV001-md-links"
+  },
   "engines": {
     "node": ">=16.x"
   },
@@ -8,5 +17,17 @@
     "createdAt": "2022-11-16T21:49:06.371Z",
     "version": "5.4.0",
     "commit": "14aeca030be012fc987dcb1c604bbbcb0fdd325e"
+  },
+  "devDependencies": {
+    "eslint": "^8.31.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.4",
+    "jest": "^29.3.1"
+  },
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "dependencies": {
+    "get-urls": "^11.0.0"
   }
 }
