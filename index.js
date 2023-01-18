@@ -21,7 +21,7 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
     } else {
       //leer los archivos md
       readFile(pathAbsolute)
-      console.log(searchFilesMd, 'llegamos hasta aquí')
+      console.log('llegamos hasta aquí')
     }
     // identificar si es un archivo o un directorio
     // si es un directorio, leer el directorio
