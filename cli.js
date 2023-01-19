@@ -1,6 +1,6 @@
 const { mdLinks } = require('./index.js');
 
-mdLinks('./README.md')
+mdLinks('./thumb.png')
   .then(() => {})
   .catch((error) => {
     console.log(error);

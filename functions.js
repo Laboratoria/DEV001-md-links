@@ -18,11 +18,14 @@ const isFileMd = (pathAbsolute) => {
   return false;
 };
 // leer el archivo si es una extensión md
-const readFile = (pathsMd) => {
-  if (pathsMd === true) {
-    return fs.readFileSync(pathsMd, 'utf-8');
-  }
-};
+const readFile = (pathsMd) => new Promise((resolve, reject) => {
+  fs.readFile(pathsMd, "utf-8", function (error, data) {
+    if(error){
+      reject('lo siento ocurrio un Error')
+    }
+    resolve(data)
+  });
+});
 
 // evaluar si el path corresponde a un directorio
 const isDirectory = (pathAbsolute) => fs.statSync(pathAbsolute).isDirectory();
@@ -39,7 +42,6 @@ const searchFilesMd = (param) => {
     readDir.forEach((list) => {
       //separando cada ruta dentro del directorio
       list = path.join(param, list);
-       console.log('cada ruta dentro del directorio: ', list);
        // recursividad para leer un directorio
       if (isDirectory(list)) {
         searchFilesMd(list);
