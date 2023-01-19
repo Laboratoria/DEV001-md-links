@@ -25,11 +25,11 @@ const readFile = (pathsMd) => {
 };
 
 // evaluar si el path corresponde a un directorio
-const isDirectory = (pathAbsolute) => fs.lstatSync(pathAbsolute).isDirectory();
+const isDirectory = (pathAbsolute) => fs.statSync(pathAbsolute).isDirectory();
 
 
 // función para leer el directorio buscando archivos md
-const arrayFileMd = [];
+let arrayFileMd = [];
 const searchFilesMd = (param) => {
   if (!isDirectory(param) && isFileMd(param)){
     arrayFileMd.push(param)
@@ -39,7 +39,7 @@ const searchFilesMd = (param) => {
     readDir.forEach((list) => {
       //separando cada ruta dentro del directorio
       list = path.join(param, list);
-       //console.log('cada ruta dentro del directorio: ', list);
+       console.log('cada ruta dentro del directorio: ', list);
        // recursividad para leer un directorio
       if (isDirectory(list)) {
         searchFilesMd(list);
@@ -59,5 +59,6 @@ module.exports = {
   getAbsolutePath,
   isFileMd,
   readFile,
-  searchFilesMd
+  searchFilesMd,
+  isDirectory
 };
