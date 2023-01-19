@@ -12,4 +12,8 @@ describe('mdLinks', () => {
     mdLinks('Documents/estepathnoexiste.md').catch((error) => {
     expect(error).toBe('La ruta no existe');
   })});
+  it('Debería rechazar la promesa si el path no existe', () => {
+    mdLinks('./thumb.png').catch((error) => {
+    expect(error).toBe('La ruta no es un archivo md');
+  })});
 });
