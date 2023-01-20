@@ -1,23 +1,26 @@
-const fs = require('fs');
+const { existsSync, isAbsolute, isDirectoryorfile, isFile, returnOnlyFilesMd} = require('./index.js')
 
-const mdLinks = (path,options) => {
-  //resolve(resuelto) cuando se resuelve la promesa, y reject no, 
-  //relacionado al then y catch, resolve y reject son callback
-  //son funciones!! en resolve le damos el valor 
-  return new Promise((resolve,reject)=> {
-    //identificar si la ruta existe.
-    //si no existe la ruta rechaza la promesa.
-    if(fs.existsSync(path)) {
-   //Chequear o convertir a una ruta absoluta.
-   //Probar si va a ser archivo o directorio.
-   //Si es un directorio hay que devolver un arreglo con archivosque sean md
-   //Si es carpeta 
+const mdLinks = (route, options) => {
+  //resolve(resuelto) cuando se resuelve la promesa, y reject no,relacionado al then y catch, resolve y reject son callback,son funciones!! 
+  const pathAbsolute = isAbsolute(route);
+  const root = isDirectoryorfile(pathAbsolute);
+  return new Promise((resolve, reject) => {
+    //estamos devolviendo una promesa, en este caso usamos reject
+    if (!existsSync(pathAbsolute)) { 
+      return reject(`${route} This path does not exist`);
+    } else if( root !== 'directory' && root !== 'file'){
+      return reject(`${pathAbsolute} is not a directory or a file`)
     } else {
-       //Si no exite la ruta rechazamos la promesa.
-  reject('la ruta no existe')
+      returnOnlyFilesMd;
     }
+    
+    
+   
+      //Probar si va a ser archivo o directorio.
+      //Si es un directorio hay que devolver un arreglo con archivos que sean md
+
   });
-  
+
 }
 
 module.exports = {

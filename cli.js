@@ -1,5 +1,7 @@
-const { mdLinks } = require('./index.js');
-mdLinks('/noexiste/').then(()=>{})
+const { mdLinks } = require('./mdLinks.js');
+
+mdLinks('./Users/gaba/Documents/GABA/BOOTCAMP LABORATORIA /PROYECTOS/program.js/app.js').then((route)=>{
+})
 .catch((error) => {
     console.log(error);
 });
