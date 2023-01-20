@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-01-17T17:53:21.362Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" etag="sKr2D4WK-AgdaFsHn1Ww" version="20.8.5" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-20T03:21:57.511Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36" etag="yF-b0ascTJELJUmOEnSy" version="20.8.5" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2320" dy="675" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2021" dy="616" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -505,8 +505,8 @@
             <mxPoint x="417.52" y="170" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="44j3uy6gFAnxvlkVxcrM-0" value="Obtener la lista de rutas dentro directorio”" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#36393d;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="590" y="730" width="120" height="40" as="geometry" />
+        <mxCell id="44j3uy6gFAnxvlkVxcrM-0" value="leer directorio y obtener la lista de rutas dentro directorio”" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#36393d;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="570" y="730" width="140" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
