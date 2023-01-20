@@ -1,106 +1,42 @@
-const fs = require("fs");
+const Api = require("./Api.js");
 const path = require("path");
-const markdownIt = require("markdown-it");
-const md = new markdownIt();
-
-//Convertir el path en Absoluto
-const pathAbsolute = (pathReceived) => {
-  return path.resolve(pathReceived);
-};
-
-// Verificar que el path si existe
-const isPathValid = (path) => {
-  try {
-    if (fs.existsSync(path)) {
-      return true;
-    }
-  } catch (error) {
-    return false;
-  }
-};
-// Ver si es un directorio, devuelve true o false
-const statDir = (path) => {
-  try {
-    if (fs.statSync(path).isDirectory()) {
-      return true;
-    }
-  } catch (error) {
-    return `el directorio no existe`;
-  }
-};
-
-// // Leer si existe un directorio
-const readDir = (pathReceived) => {
-  return fs.readdirSync(pathReceived);
-};
-// Es un archivo, devuelve true o false
-const statFile = (path) => {
-  const statsObj = fs.statSync(path);
-  if (statsObj.isFile()) {
-    return statsObj.isFile();
-  } else {
-    return `No existe el archivo ${statsObj.isFile()}`;
-  }
-};
-// Extraer los archivos con .md
-const fileMd = (pathReceived) => {
-  const fileMd = path.extname(pathReceived);
-  return fileMd === ".md";
-};
-// Leer el contenido de un archivo
-const readFiles = (pathReceived) => {
-    fs.readFile(pathReceived, "utf-8", (error, contenido) => {
-    if (error) {
-      return error;
-    } else {
-      if (fileMd(pathReceived)) {
-        let links = [];
-        const fileParse = md.render(contenido);
-        const regExp = /(<a [^>]*(href="([^>^\"]*)")[^>]*>)([^<]+)(<\/a>)/gi;
-        let result;
-        if(!pathAbsolute(pathReceived)){
-          pathReceived = pathResult(pathReceived).replace(/\\/g,'/');
-        } else {
-          pathReceived = pathReceived.replace(/\\/g,'/');
-        }
-        while ((result = regExp.exec(fileParse)) !== null) {
-          const obj = {
-            href: result[(0, 3)],
-            text: result[(0, 4)],
-            file: pathReceived,
-          };
-          links.push(obj);
-        }
-        return links;
-      } 
-    }
-  });
-};
+const fs = require("fs");
 
 //Funcion mdLinks
 const mdLinks = (pathReceived, options) => {
-  return new Promise((resolve, reject) => {
+  const promise = new Promise((resolve, reject) => {
     // Identifica si la ruta existe.
     if (pathReceived) {
-      const pathRela = (pathReceived) => path.isAbsolute(pathReceived);
-      console.log(pathRela(pathReceived));
-      // Si existe y es absoluta.
-      if (isPathValid(pathAbsolute(pathReceived))) {
-        if (statDir(pathAbsolute(pathReceived))) {
-          resolve(readDir(pathAbsolute(pathReceived)));
-        }else if (statFile(pathAbsolute(pathReceived))) {
-          console.log('leyendo archivos dentro de mdlinks', readFiles(pathAbsolute(path)));
-          resolve(readFiles(pathAbsolute(pathReceivedh)));
+      // Verifica si existe y es absoluta, sino convertirla en Absoluta
+      if (Api.isPathValid(Api.pathDefinitive(pathReceived))) {
+        let arrayFiles = Api.pathFileMd(Api.pathDefinitive(pathReceived))
+        console.log('antes', arrayFiles)
+        const files = arrayFiles.map((file)=> {
+        Api.readFiles(file).then((resp) => resp).catch((Error) => Error);
+        console.log('durante', file)})
+
+        if (arrayFiles.length === 0) {
+          reject("No hay archivos con la extensión .Md");
         }
+        console.log('despues', arrayFiles)
+        resolve(files)
+        
+            // if (options.validate === true) {
+            //   Api.validateLinks(resp).then((links) => {
+            //     resolve(links);
+            //   });
+            // }
+        // if (options.validate === false) {
+        //   resolve(resp);
+        //   // console.log(files)
+        // 
       } else {
         //  Si no existe la ruta se rechaza la promesa.
-        reject(`El archivo no es valido`);
-      }
-    } else {
-      //  Si no existe la ruta se rechaza la promesa.
-      reject(`El archivo no existe`);
+        reject(`El archivo no existe`);
     }
-  });
-};
+  }
+});
+return promise;
+}
 
 module.exports = { mdLinks };
