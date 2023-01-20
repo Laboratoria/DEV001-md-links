@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const markdownIt = require("markdown-it");
+const { resolve } = require("path");
 const md = new markdownIt();
 
 //Convertir el path en Absoluto
@@ -49,9 +50,10 @@ const fileMd = (pathReceived) => {
 };
 // Leer el contenido de un archivo
 const readFiles = (pathReceived) => {
+  const file = new Promise((resolve, reject) => {
   fs.readFile(pathReceived, "utf-8", (error, contenido) => {
     if (error) {
-      return error;
+      reject(error);
     } else {
       if (fileMd(pathReceived)) {
         let links = [];
@@ -66,25 +68,27 @@ const readFiles = (pathReceived) => {
           };
           links.push(obj);
         }
-        console.log(links)
-        return links;
+        resolve(links)
       }
     }
   });
+ })
+ return Promise.resolve(file);
 };
 
 //Funcion mdLinks
 const mdLinks = (path, options) => {
-  return new Promise((resolve, reject) => {
+  const mdlink = new Promise((resolve, reject) => {
     // Identifica si la ruta existe.
     if (path) {
       // Si existe y es absoluta.
       if (isPathValid(pathAbsolute(path))) {
         if (statDir(pathAbsolute(path))) {
-          resolve(readDir(pathAbsolute(path)));
+          const directorio = readDir(pathAbsolute(path))
+          resolve(directorio);
         }
         if (statFile(pathAbsolute(path))) {
-          console.log('esta dentro de mdlinks', readFiles(pathAbsolute(path)));
+          
           resolve(readFiles(pathAbsolute(path)));
         }
       } else {
@@ -96,6 +100,7 @@ const mdLinks = (path, options) => {
       reject(`El archivo no existe`);
     }
   });
+  return Promise.resolve(mdlink)
 };
 
 module.exports = { mdLinks };
