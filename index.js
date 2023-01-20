@@ -46,10 +46,6 @@ const returnOnlyFilesMd = (routeFile) => {
     return arrayForFiles(routeFile).filter(path.extname(route)==='.md');
 };
 
-
-
-
-
     module.exports = {
         existsSync,
         isAbsolute,
