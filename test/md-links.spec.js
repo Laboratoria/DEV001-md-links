@@ -1,5 +1,4 @@
-const { mdLinks } = require('../index.js');
-
+const { mdLinks } = require('../mdLinks.js');
 
 describe('mdLinks', () => {
 
