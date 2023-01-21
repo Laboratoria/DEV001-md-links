@@ -77,19 +77,21 @@ const readFiles = (pathReceived) => {
     const links = [];
     const fileParse = md.render(data);
     const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
-    const regExpLink = /\(((?:\/|https?:\/\/).*)\)/g;
-    const regExpText = /\[(.*)\]/g;
+    // const regExpLink = /\(((?:\/|https?:\/\/).*)\)/g;
+    // const regExpText = /\[(.*)\]/g;
     let result;
       while ((result = regExp.exec(fileParse)) !== null) {
-      result.forEach((link)=>{
+      // result.forEach((link)=>{
         const obj = {
-          href: link.match(regExpLink).join().slice(1,-1),
-          text: link.match(regExpText).join().slice(1,-1),
+          href: result[(0, 3)],
+          text: result[(0, 4)],
+          // href: link.match(regExpLink).join().slice(1,-1),
+          // text: link.match(regExpText).join().slice(1,-1),
           file: pathReceived,
           };
           links.push(obj);
-      });
-      console.log('getlinks', links)
+      // });
+      
       }
       return links;
   }

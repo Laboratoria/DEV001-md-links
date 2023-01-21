@@ -10,14 +10,24 @@ const mdLinks = (pathReceived, options) => {
       // Verifica si existe y es absoluta, sino convertirla en Absoluta
       if (Api.isPathValid(Api.pathDefinitive(pathReceived))) {
         const arrayPaths = Api.pathFileMd(Api.pathDefinitive(pathReceived));
+        
         if (arrayPaths.length === 0) {
+          
           reject("No hay archivos con la extensión .Md");
         } else {
-          let links = [];
-          let array = arrayPaths.forEach((file)=> Api.readFiles(file).then((file)=>Api.getLinks(file)))
-          links.push(array)
-          console.log('mdlinks',array)
-          resolve(links);
+          console.log('arrayPath', arrayPaths)
+          // let links = [];
+          // let array = arrayPaths.forEach((file)=> Api.readFiles(file)
+          // .then((file)=>Api.getLinks(file)))
+          let array = arrayPaths.map((file)=>{
+            Api.readFiles(file).then((resp)=>{
+              console.log(Api.getLinks(resp))
+            
+            })
+          })
+          
+          console.log('mdlinks', array)
+          resolve(array);
         }
         // if (options.validate === true) {
         //   Api.validateLinks(resp).then((links) => {
