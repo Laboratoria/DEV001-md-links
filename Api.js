@@ -47,8 +47,38 @@ const pathDefinitive = (pathReceived) => {
   }
 };
 //
-const filterLinks = (data) =>{
+// const readFiles = (pathReceived) => {
+//   const file = new Promise((resolve, reject) => {
+//   fs.readFile(pathReceived, "utf-8", (error, contenido) => {
+//     if (error) {
+//       reject(error);
+//     } else {
+//       if (fileMd(pathReceived)) {
+//         let links = [];
+//         const fileParse = md.render(contenido);
+//         const regExp = /(<a [^>]*(href="([^>^\"]*)")[^>]*>)([^<]+)(<\/a>)/gi;
+//         let result;
+//         while ((result = regExp.exec(fileParse)) !== null) {
+//           const obj = {
+//             href: result[(0, 3)],
+//             text: result[(0, 4)],
+//             file: pathReceived,
+//           };
+//           links.push(obj);
+//         }
+//         resolve(links)
+//       }
+//     }
+//   });
+//  })
+//  return Promise.resolve(file);
+// };
+
+
+const filterLinks = (pathReceived) =>{
+new Promise((resolve, reject) => {
   const links = [];
+  readFiles(pathReceived).then((data)=>{
     const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
     const fileParse = md.render(data);
     let result;
@@ -60,17 +90,18 @@ const filterLinks = (data) =>{
         };
         links.push(obj);
       }
-    return links;
+    resolve(links);
+  }).catch((error)=>reject(error));   
+});
 };
-// Leer el contenido de un archivo
+// // Leer el contenido de un archivo
 const readFiles = (pathReceived) => {
   return new Promise((resolve, reject) => {
     fs.readFile(pathReceived, "utf-8", (error, data)=>{
     if(error){
       reject(error)
     } else {
-      console.log('filter',filterLinks(data))
-    resolve(filterLinks(data));
+    resolve(data);
     }
     })
   });

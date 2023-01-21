@@ -19,16 +19,14 @@ const mdLinks = (pathReceived, options) => {
           let links = [];
           // let array = arrayPaths.forEach((file)=> Api.readFiles(file)
           // .then((file)=>Api.getLinks(file)))
-            arrayPaths.forEach((file)=>{
-            Api.readFiles(file).then((resp)=>{
-              console.log('resp', resp)
-              // links.push((resp))
+            // arrayPaths.forEach((file)=>{
+            // Api.filterLinks(file).then((resp)=>console.log(resp))
+            //   // links.push((resp))
               
-              
-            })
-          })
-          
-          // console.log('mdlinks',array)
+            // })
+            const links2 = Promise.all(arrayPaths.map((file) =>Api.filterLinks(file)));
+          links2.then((resp)=>console.log(resp))
+          console.log('mdlinks', links2)
           resolve(links);
         }
         // if (options.validate === true) {
