@@ -12,22 +12,10 @@ const mdLinks = (pathReceived, options) => {
         const arrayPaths = Api.pathFileMd(Api.pathDefinitive(pathReceived));
         
         if (arrayPaths.length === 0) {
-          
           reject("No hay archivos con la extensión .Md");
         } else {
-          console.log('arrayPath', arrayPaths)
-          let links = [];
-          // let array = arrayPaths.forEach((file)=> Api.readFiles(file)
-          // .then((file)=>Api.getLinks(file)))
-            // arrayPaths.forEach((file)=>{
-            // Api.filterLinks(file).then((resp)=>console.log(resp))
-            //   // links.push((resp))
-              
-            // })
-            const links2 = Promise.all(arrayPaths.map((file) =>Api.filterLinks(file)));
-          links2.then((resp)=>console.log(resp))
-          console.log('mdlinks', links2)
-          resolve(links);
+          const links2 = Promise.all(arrayPaths.map((file) => Api.readFiles(file)));
+          resolve(links2);
         }
         // if (options.validate === true) {
         //   Api.validateLinks(resp).then((links) => {

@@ -47,88 +47,30 @@ const pathDefinitive = (pathReceived) => {
   }
 };
 //
-// const readFiles = (pathReceived) => {
-//   const file = new Promise((resolve, reject) => {
-//   fs.readFile(pathReceived, "utf-8", (error, contenido) => {
-//     if (error) {
-//       reject(error);
-//     } else {
-//       if (fileMd(pathReceived)) {
-//         let links = [];
-//         const fileParse = md.render(contenido);
-//         const regExp = /(<a [^>]*(href="([^>^\"]*)")[^>]*>)([^<]+)(<\/a>)/gi;
-//         let result;
-//         while ((result = regExp.exec(fileParse)) !== null) {
-//           const obj = {
-//             href: result[(0, 3)],
-//             text: result[(0, 4)],
-//             file: pathReceived,
-//           };
-//           links.push(obj);
-//         }
-//         resolve(links)
-//       }
-//     }
-//   });
-//  })
-//  return Promise.resolve(file);
-// };
-
-
-const filterLinks = (pathReceived) =>{
-new Promise((resolve, reject) => {
-  const links = [];
-  readFiles(pathReceived).then((data)=>{
-    const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
-    const fileParse = md.render(data);
-    let result;
-      while ((result = regExp.exec(fileParse)) !== null) {
-      const obj = {
-        href: result[(0, 3)],
-        text: result[(0, 4)],
-        file: pathReceived,
-        };
-        links.push(obj);
-      }
-    resolve(links);
-  }).catch((error)=>reject(error));   
-});
-};
-// // Leer el contenido de un archivo
 const readFiles = (pathReceived) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(pathReceived, "utf-8", (error, data)=>{
-    if(error){
-      reject(error)
+ return new Promise((resolve, reject) => {
+  fs.readFile(pathReceived, "utf-8", (error, contenido) => {
+    if (error) {
+      reject(error);
     } else {
-    resolve(data);
+      if (fileMd(pathReceived)) {
+        let links = [];
+        const regex = /\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g;
+        let match = regex.exec(contenido);
+      while (match !== null) {
+        links.push({
+          href: match[2],
+          text: match[1],
+          file: pathReceived,
+        });
+        match = regex.exec(contenido);
+      }
+      resolve(links);
     }
-    })
-  });
-  };
-  // const getLinks = (data) => {
-  //   const links = [];
-  //   const fileParse = md.render(data);
-  //   const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
-  //   const regExpLink = /\(((?:\/|https?:\/\/).*)\)/g;
-  //   const regExpText = /\[(.*)\]/g;
-  //   let result;
-  //     while ((result = regExp.exec(fileParse)) !== null) {
-  //     result.forEach((link)=>{
-  //       const obj = {
-  //         href1: result[(0, 3)],
-  //         text1: result[(0, 4)],
-  //         href: link.match(regExpLink).join().slice(1,-1),
-  //         text: link.match(regExpText).join().slice(1,-1),
-  //         // file: pathReceived,
-  //         };
-  //         links.push(obj);
-  //     });
-  //     console.log('getlinks', links)
-  //     }
-  //     return links;
-  // }
-  
+    }
+  })
+ })
+}
 
 const pathFileMd = (pathReceived) => {
   const statsObj = fs.statSync(pathReceived);
@@ -158,8 +100,7 @@ const validateLinks = (arrLinks) => {
           status: resultLink.status,
           message:
             resultLink.status > 199 && resultLink.status < 400 ? "OK" : "Fail",
-          text: link.text
-          // .slice(0, 50),
+          text: link.text.slice(0, 50),
         };
         console.log(statusData)
         return statusData;
@@ -187,7 +128,5 @@ module.exports = {
   readFiles,
   pathDefinitive,
   readDir,
-  filterLinks,
-  // getLinks,
   validateLinks
 };
