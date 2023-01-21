@@ -16,18 +16,20 @@ const mdLinks = (pathReceived, options) => {
           reject("No hay archivos con la extensión .Md");
         } else {
           console.log('arrayPath', arrayPaths)
-          // let links = [];
+          let links = [];
           // let array = arrayPaths.forEach((file)=> Api.readFiles(file)
           // .then((file)=>Api.getLinks(file)))
-          let array = arrayPaths.map((file)=>{
+            arrayPaths.forEach((file)=>{
             Api.readFiles(file).then((resp)=>{
-              console.log(Api.getLinks(resp))
-            
+              console.log('resp', resp)
+              // links.push((resp))
+              
+              
             })
           })
           
-          console.log('mdlinks', array)
-          resolve(array);
+          // console.log('mdlinks',array)
+          resolve(links);
         }
         // if (options.validate === true) {
         //   Api.validateLinks(resp).then((links) => {

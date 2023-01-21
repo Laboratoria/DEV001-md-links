@@ -46,21 +46,22 @@ const pathDefinitive = (pathReceived) => {
     return (pathReceived = pathReceived.replace(/\\/g, "/"));
   }
 };
-// const filterLinks = (data) =>{
-//   const links = [];
-//     const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
-//     const fileParse = md.render(data);
-//     let result;
-//       while ((result = regExp.exec(fileParse)) !== null) {
-//       const obj = {
-//         href: result[(0, 3)],
-//         text: result[(0, 4)],
-//         file: pathReceived,
-//         };
-//         links.push(obj);
-//       }
-//     return links;
-// };
+//
+const filterLinks = (data) =>{
+  const links = [];
+    const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
+    const fileParse = md.render(data);
+    let result;
+      while ((result = regExp.exec(fileParse)) !== null) {
+      const obj = {
+        href: result[(0, 3)],
+        text: result[(0, 4)],
+        file: pathReceived,
+        };
+        links.push(obj);
+      }
+    return links;
+};
 // Leer el contenido de un archivo
 const readFiles = (pathReceived) => {
   return new Promise((resolve, reject) => {
@@ -68,33 +69,34 @@ const readFiles = (pathReceived) => {
     if(error){
       reject(error)
     } else {
-    resolve(data);
+      console.log('filter',filterLinks(data))
+    resolve(filterLinks(data));
     }
     })
   });
   };
-  const getLinks = (data) => {
-    const links = [];
-    const fileParse = md.render(data);
-    const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
-    // const regExpLink = /\(((?:\/|https?:\/\/).*)\)/g;
-    // const regExpText = /\[(.*)\]/g;
-    let result;
-      while ((result = regExp.exec(fileParse)) !== null) {
-      // result.forEach((link)=>{
-        const obj = {
-          href: result[(0, 3)],
-          text: result[(0, 4)],
-          // href: link.match(regExpLink).join().slice(1,-1),
-          // text: link.match(regExpText).join().slice(1,-1),
-          file: pathReceived,
-          };
-          links.push(obj);
-      // });
-      
-      }
-      return links;
-  }
+  // const getLinks = (data) => {
+  //   const links = [];
+  //   const fileParse = md.render(data);
+  //   const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
+  //   const regExpLink = /\(((?:\/|https?:\/\/).*)\)/g;
+  //   const regExpText = /\[(.*)\]/g;
+  //   let result;
+  //     while ((result = regExp.exec(fileParse)) !== null) {
+  //     result.forEach((link)=>{
+  //       const obj = {
+  //         href1: result[(0, 3)],
+  //         text1: result[(0, 4)],
+  //         href: link.match(regExpLink).join().slice(1,-1),
+  //         text: link.match(regExpText).join().slice(1,-1),
+  //         // file: pathReceived,
+  //         };
+  //         links.push(obj);
+  //     });
+  //     console.log('getlinks', links)
+  //     }
+  //     return links;
+  // }
   
 
 const pathFileMd = (pathReceived) => {
@@ -154,6 +156,7 @@ module.exports = {
   readFiles,
   pathDefinitive,
   readDir,
-  getLinks,
+  filterLinks,
+  // getLinks,
   validateLinks
 };
