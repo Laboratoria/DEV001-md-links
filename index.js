@@ -4,39 +4,37 @@ const fs = require("fs");
 
 //Funcion mdLinks
 const mdLinks = (pathReceived, options) => {
-  const promise = new Promise((resolve, reject) => {
+  const mdlink = new Promise((resolve, reject) => {
     // Identifica si la ruta existe.
     if (pathReceived) {
       // Verifica si existe y es absoluta, sino convertirla en Absoluta
       if (Api.isPathValid(Api.pathDefinitive(pathReceived))) {
-        let arrayFiles = Api.pathFileMd(Api.pathDefinitive(pathReceived))
-        console.log('antes', arrayFiles)
-        const files = arrayFiles.map((file)=> {
-        Api.readFiles(file).then((resp) => resp).catch((Error) => Error);
-        console.log('durante', file)})
-
-        if (arrayFiles.length === 0) {
+        const arrayPaths = Api.pathFileMd(Api.pathDefinitive(pathReceived));
+        if (arrayPaths.length === 0) {
           reject("No hay archivos con la extensión .Md");
+        } else {
+          let links = [];
+          let array = arrayPaths.forEach((file)=> Api.readFiles(file).then((file)=>Api.getLinks(file)))
+          links.push(array)
+          console.log('mdlinks',array)
+          resolve(links);
         }
-        console.log('despues', arrayFiles)
-        resolve(files)
-        
-            // if (options.validate === true) {
-            //   Api.validateLinks(resp).then((links) => {
-            //     resolve(links);
-            //   });
-            // }
+        // if (options.validate === true) {
+        //   Api.validateLinks(resp).then((links) => {
+        //     resolve(links);
+        //   });
+        // }
         // if (options.validate === false) {
         //   resolve(resp);
         //   // console.log(files)
-        // 
+        //
       } else {
         //  Si no existe la ruta se rechaza la promesa.
         reject(`El archivo no existe`);
+      }
     }
-  }
-});
-return promise;
-}
+  });
+  return Promise.resolve(mdlink);
+};
 
 module.exports = { mdLinks };

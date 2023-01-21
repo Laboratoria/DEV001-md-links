@@ -5,6 +5,7 @@ const md = new markdownIt();
 const fetch = require("node-fetch");
 const { resolve } = require("path");
 
+
 //Devuelve true si el path es absoluto sino false.
 const pathRelative = (pathReceived) => {
   return path.isAbsolute(pathReceived);
@@ -63,44 +64,37 @@ const pathDefinitive = (pathReceived) => {
 // Leer el contenido de un archivo
 const readFiles = (pathReceived) => {
   return new Promise((resolve, reject) => {
-    fs.readFile(pathReceived, {encoding:"utf-8"}, (error, data)=>{
+    fs.readFile(pathReceived, "utf-8", (error, data)=>{
     if(error){
       reject(error)
     } else {
-    const links = [];
-    const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
-    const fileParse = md.render(data);
-    let result;
-      while ((result = regExp.exec(fileParse)) !== null) {
-      const obj = {
-        href: result[(0, 3)],
-        text: result[(0, 4)],
-        file: pathReceived,
-        };
-        links.push(obj);
-      }
-      resolve(links)
+    resolve(data);
     }
     })
   });
   };
-
-// const readAllLinks = (newPath) => {
-//   if (newPath) {
-//     const links = [];
-//     readFiles(newPath)
-//         // .then((data) => {
-//         //   return(filterLinks(data));
-//         // })
-//         // .catch((Error) => {
-//         //   return Error;
-//         // });
-    
-//     links.push(allLinks);
-//     return links;
-//   }
-// };
+  const getLinks = (data) => {
+    const links = [];
+    const fileParse = md.render(data);
+    const regExp = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
+    const regExpLink = /\(((?:\/|https?:\/\/).*)\)/g;
+    const regExpText = /\[(.*)\]/g;
+    let result;
+      while ((result = regExp.exec(fileParse)) !== null) {
+      result.forEach((link)=>{
+        const obj = {
+          href: link.match(regExpLink).join().slice(1,-1),
+          text: link.match(regExpText).join().slice(1,-1),
+          file: pathReceived,
+          };
+          links.push(obj);
+      });
+      console.log('getlinks', links)
+      }
+      return links;
+  }
   
+
 const pathFileMd = (pathReceived) => {
   const statsObj = fs.statSync(pathReceived);
   let allFilesMd = [];
@@ -115,8 +109,8 @@ const pathFileMd = (pathReceived) => {
     });
   }
   return allFilesMd;
-  ;
 };
+
 
 //Validar links
 const validateLinks = (arrLinks) => {
@@ -158,7 +152,6 @@ module.exports = {
   readFiles,
   pathDefinitive,
   readDir,
-  // readAllLinks,
-  validateLinks,
-  // filterLinks
+  getLinks,
+  validateLinks
 };
