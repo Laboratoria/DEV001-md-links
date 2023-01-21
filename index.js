@@ -1,8 +1,17 @@
-// NOS PERMITE TRABAJAR CON ARCHIVOS DEL SISTEMA OPERATIVO.
+
+
+
+
+
+
+
+
+
+/* PERMITE TRABAJAR CON ARCHIVOS DEL SISTEMA OPERATIVO (file system).
 const fs = require('fs');
 
 const mdLinks = (path, options) => {
-  return new Promise((resolve, reject) => {
+   return new Promise((resolve, reject) => {
     //identifica si la ruta existe.
     if (fs.existsSync(path)) {
       //chequear y convertir  a una ruta absoluta.
@@ -18,3 +27,4 @@ const mdLinks = (path, options) => {
 module.exports = {
   mdLinks,
 }
+*/
