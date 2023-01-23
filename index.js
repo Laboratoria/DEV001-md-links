@@ -1,18 +1,15 @@
-const Api = require("./Api.js");
-const path = require("path");
-const fs = require("fs");
+const Api = require('./Api.js');
 
 //Funcion mdLinks
 const mdLinks = (pathReceived, options) => {
-  const mdlink = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     // Identifica si la ruta existe.
     if (pathReceived) {
       // Verifica si existe y es absoluta, sino convertirla en Absoluta
       if (Api.isPathValid(Api.pathDefinitive(pathReceived))) {
         const arrayPaths = Api.pathFileMd(Api.pathDefinitive(pathReceived));
-        
         if (arrayPaths.length === 0) {
-          reject("No hay archivos con la extensión .Md");
+          reject('No hay archivos con la extensión .Md');
         } else {
           const links2 = Promise.all(arrayPaths.map((file) => Api.readFiles(file)));
           resolve(links2);
@@ -32,7 +29,5 @@ const mdLinks = (pathReceived, options) => {
       }
     }
   });
-  return Promise.resolve(mdlink);
-};
-
+}
 module.exports = { mdLinks };
