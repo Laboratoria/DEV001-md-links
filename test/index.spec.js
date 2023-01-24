@@ -35,6 +35,6 @@ describe('mdLinks', () => {
           file: 'C:/Users/Laboratoria/erika/Md-links/DEV001-md-links/archivoPrueba/segundoArchivoP/prueba2.md',
         }
       ]
-      expect(mdLinks(path, { validate: false })).resolves.toBe(validateFalse);
+      expect(mdLinks(path, { validate: false })).resolves.toEqual(validateFalse);
   });
   });

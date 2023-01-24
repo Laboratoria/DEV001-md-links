@@ -13,7 +13,7 @@ const mdLinks = (pathReceived, options) => {
             resolve(links2);
           }else if(options && options.validate === true) {
             Api.validateLinks(links2).then((links) => {
-              resolve(links);
+            resolve(links);
             })
         }
       } else {
