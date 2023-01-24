@@ -4,8 +4,8 @@ const {
   isFileMd,
   isDirectory,
   searchFilesMd,
-  getLinks
-} = require('./functions.js');
+} = require('./functionsPath.js');
+const { readAllFilesMds } = require('./functionsLinks.js')
 
 const mdLinks = (path, options) =>
   new Promise((resolve, reject) => {
@@ -30,8 +30,9 @@ const mdLinks = (path, options) =>
         if (files.length === 0) {
           return reject(`Esta ruta no contiene archivos md: ${pathAbsolute}`);
         } else {
-          const result = getLinks(files);
-          // resolve(result);
+          const result = readAllFilesMds(files);
+          console.log(result)
+          
         }
       }
     }
