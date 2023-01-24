@@ -8,26 +8,21 @@ const mdLinks = (pathReceived, options) => {
       // Verifica si existe y es absoluta, sino convertirla en Absoluta
       if (Api.isPathValid(Api.pathDefinitive(pathReceived))) {
         const arrayPaths = Api.pathFileMd(Api.pathDefinitive(pathReceived));
-        if (arrayPaths.length === 0) {
-          reject('No hay archivos con la extensión .Md');
-        } else {
-          const links2 = Promise.all(arrayPaths.map((file) => Api.readFiles(file)));
-          resolve(links2);
+      if (options && options.validate === false){
+            const links2 = Promise.all(arrayPaths.map((file) => Api.readFiles(file)));
+            resolve(links2);
+          }else if(options && options.validate === true) {
+            Api.validateLinks(links2).then((links) => {
+              resolve(links);
+            })
         }
-        // if (options.validate === true) {
-        //   Api.validateLinks(resp).then((links) => {
-        //     resolve(links);
-        //   });
-        // }
-        // if (options.validate === false) {
-        //   resolve(resp);
-        //   // console.log(files)
-        //
       } else {
         //  Si no existe la ruta se rechaza la promesa.
-        reject(`El archivo no existe`);
+        reject(`El archivo no existe, si necesitas ayuda use el comando --help o --h`);
       }
+    }else {
+      reject('Ingrese la ruta del archivo o directorio');
     }
-  });
+  })
 }
 module.exports = { mdLinks };

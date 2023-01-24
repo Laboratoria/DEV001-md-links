@@ -3,6 +3,7 @@ const path = require("path");
 const fetch = require("node-fetch");
 
 
+
 //Devuelve true si el path es absoluto sino false.
 const pathRelative = (pathReceived) => {
   return path.isAbsolute(pathReceived);
@@ -85,35 +86,34 @@ const pathFileMd = (pathReceived) => {
 
 
 //Validar links
-// const validateLinks = (arrLinks) => {
-//   const arrLinksStatus = arrLinks.map((link) => {
-//     return fetch(link.href)
-//       .then((resultLink) => {
-//         const statusData = {
-//           href: link.href,
-//           file: link.file,
-//           status: resultLink.status,
-//           message:
-//             resultLink.status > 199 && resultLink.status < 400 ? "OK" : "Fail",
-//           text: link.text.slice(0, 50),
-//         };
-//         console.log(statusData)
-//         return statusData;
-//       })
-//       .catch((error) => {
-//         const statusDataErr = {
-//           href: link.href,
-//           file: link.file,
-//           status: `Fail ${error.message}`,
-//           message: "No status",
-//           text: link.text
-//           // .slice(0, 50),
-//         };
-//         return statusDataErr;
-//       });
-//   }); console.log('todas promise',arrLinksStatus)
-//   return Promise.all(arrLinksStatus);
-// };
+const validateLinks = (arrLinks) => {
+  const arrLinksStatus = arrLinks.map((link) => {
+    return fetch(link.href)
+      .then((resultLink) => {
+        const statusData = {
+          href: link.href,
+          file: link.file,
+          status: resultLink.status,
+          message:
+            resultLink.status > 199 && resultLink.status < 400 ? "OK" : "Fail",
+          text: link.text.slice(0, 50),
+        };
+        console.log(statusData)
+        return statusData;
+      })
+      .catch((error) => {
+        const statusDataErr = {
+          href: link.href,
+          file: link.file,
+          status: `Fail ${error.message}`,
+          message: "No status",
+          text: link.text
+        };
+        return statusDataErr;
+      });
+  }); console.log('todas promise',arrLinksStatus)
+  return Promise.all(arrLinksStatus);
+};
 
 module.exports = {
   isPathValid,
@@ -123,5 +123,5 @@ module.exports = {
   readFiles,
   pathDefinitive,
   readDir,
-  // validateLinks
+  validateLinks
 };
