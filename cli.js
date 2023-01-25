@@ -1,6 +1,7 @@
 const { mdLinks } = require('./mdLinks.js');
 
-mdLinks('/noexiste/').then((route)=>{
+mdLinks('./README.md').then((route)=>{
+console.log(mdLinks());
 })
 .catch((error) => {
     console.log(error);
