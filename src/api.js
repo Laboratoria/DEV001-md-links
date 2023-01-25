@@ -1,15 +1,24 @@
-//leer archivo e imprimir el contenido en la terminal
+
 const fs = require('fs');
-//manejo de rutas sistema 
-//const path = require('path');
+const path = require ('path');
 
-fs.readdir('./', (error, files)) => {
-   if (error){
-    throw error;
-   }else {
-    console.log(files);
-   }
+//validar que la ruta existe
+const existePath = 
 
 
 
-//const readFile = fs
+
+
+
+
+
+/*
+const fs = require ('fs');
+
+const file = fs.readFileSync('./filesExamples/ej.md', 'utf-8');
+
+console.log(file);
+*/
+
+//leer archivo e imprimir el contenido en la terminal
+//const fs = require('fs');

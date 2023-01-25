@@ -1,21 +1,16 @@
-
-
-
-
-
-
-
-
-
-/* PERMITE TRABAJAR CON ARCHIVOS DEL SISTEMA OPERATIVO (file system).
 const fs = require('fs');
+const path = require('path');
 
-const mdLinks = (path, options) => {
-   return new Promise((resolve, reject) => {
+const mdLinks = (filePath, option) => {
+  return new Promise((resolve, reject) => {
     //identifica si la ruta existe.
-    if (fs.existsSync(path)) {
+    const fileExist = fs.existsSync(fileName);
+    //se resuelve la ruta como absoluta
+    const fileName = path.resolve(filePath);
+    if (fileExist) {
+      resolve([]);
       //chequear y convertir  a una ruta absoluta.
-      //probar si esa ruta absoluta es un archivo o un directorio.
+      //probar si es md o no.
       // si es un directorio extraer los archivos md y devolverlo en un arreglo.
     } else {
       // si no existe la ruta se rechaza la promesa.
@@ -24,7 +19,8 @@ const mdLinks = (path, options) => {
   });
 };
 
+
 module.exports = {
   mdLinks,
 }
-*/
+
