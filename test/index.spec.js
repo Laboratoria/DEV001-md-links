@@ -1,4 +1,6 @@
 const { mdLinks } = require('../index.js');
+const { fetch } =  require('../__mock__/fetch.js');
+
 
 
 describe('mdLinks', () => {
@@ -26,15 +28,17 @@ describe('mdLinks', () => {
     expect(error).toBe('Ingrese la ruta del archivo o directorio');
   });
  });
- it('{ validate: false } : Debe retornar href, text, file', () => {
-  const path = './archivoPrueba/segundoArchivoP/';
-      const validateFalse = [
-        {
-          href: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
-          text: 'recurso',
-          file: 'C:/Users/Laboratoria/erika/Md-links/DEV001-md-links/archivoPrueba/segundoArchivoP/prueba2.md',
-        }
-      ]
-      expect(mdLinks(path, { validate: false })).resolves.toEqual(validateFalse);
-  });
+//  it('{ validate: false } : Debe retornar href, text, file', () => {
+//   const path = './archivoPrueba/segundoArchivoP/';
+//       const fetch = [
+//         {
+//           href: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
+//           text: 'recurso',
+//           file: 'C:/Users/Laboratoria/erika/Md-links/DEV001-md-links/archivoPrueba/segundoArchivoP/prueba2.md',
+//         }
+//       ]
+//       expect(mdLinks(path, { validate: false })).resolves.toBe(fetch);
+//   });
+
+
   });

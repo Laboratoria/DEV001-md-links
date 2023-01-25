@@ -6,15 +6,25 @@ const mdLinks = (pathReceived, options) => {
     // Identifica si la ruta existe.
     if (pathReceived) {
       // Verifica si existe y es absoluta, sino convertirla en Absoluta
-      if (Api.isPathValid(Api.pathDefinitive(pathReceived))) {
-        const arrayPaths = Api.pathFileMd(Api.pathDefinitive(pathReceived));
-      if (options && options.validate === false){
-            const links2 = Promise.all(arrayPaths.map((file) => Api.readFiles(file)));
-            resolve(links2);
-          }else if(options && options.validate === true) {
-            Api.validateLinks(links2).then((links) => {
-            resolve(links);
-            })
+      if (Api.isPathValid(pathReceived)) {
+        pathReceived = Api.pathDefinitive(pathReceived);
+          if(Api.pathFileMd(pathReceived)){
+          const arrayPaths = Api.pathFileMd(pathReceived);
+          if(arrayPaths === 0){
+            reject('No existen archivos con extensión .Md')
+          }else{
+            const links2 = Promise.all(arrayPaths.map((file) => Api.readFiles(file)
+            .then((resp)=> {
+              if (options && options.validate === false){
+                resolve(resp)
+                }else { // Validate ===true
+                const array = resp;
+                const arrayLinks = Api.validateLinks(array)
+                resolve(arrayLinks)
+                }
+              }).catch((error)=> error)
+            ));              
+          }
         }
       } else {
         //  Si no existe la ruta se rechaza la promesa.

@@ -1,4 +1,5 @@
 const Api = require('../Api.js');
+const { fetch } =  require('../__mock__/fetch.js');
 
 //isPathAbsolute
 describe('pathRelative', () => {
@@ -50,15 +51,56 @@ describe('readFiles', () => {
         }).catch(()=>{})});
   });
 
-//Extensión Md
-// describe('fileMd', () => {
-//     it('Deberia ser una función', () => {
-//       expect(typeof(Api.fileMd('./archivoPrueba/'))).toBe('function');
-//     });
-//     it('Debe retornar true si la función encuentra un archivo .md', () => {
-//       expect(Api.fileMd('./archivoPrueba/prueba.md')).toBe(true);
-//     });
-//     it('Debe retornar false si la función no encuentra un archivo .md', () => {
-//       expect(Api.fileMd('./archivoPrueba/index.js')).toBe(false);
-//     });
-//   });
+//Función ValidateLinks
+const data = [
+  {
+    'href': 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
+    'text': 'recurso',
+    'file': 'C:/Users/Laboratoria/erika/Md-links/DEV001-md-links/archivoPrueba/segundoArchivoP/prueba2.md',
+  }
+];
+
+const dataError = [
+    {
+      'href': 'https://www.youtube.',
+      'text': 'recurso',
+      'file': 'C:/Users/Laboratoria/erika/Md-links/DEV001-md-links/archivoPrueba/segundoArchivoP/prueba2.md',
+    }
+];
+
+describe('validateLinks() Valida los links con fetch', () => {
+  it('validateLinks() debe ser una función', () => {
+    expect(typeof(Api.validateLinks)).toBe('function');
+  });
+  it('Debe retornar mensaje Ok y validar status de links', () => {
+    const output = [
+      {
+        'href': 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
+        'file': 'C:/Users/Laboratoria/erika/Md-links/DEV001-md-links/archivoPrueba/segundoArchivoP/prueba2.md',
+        'status': 200,
+        'message': 'OK',
+        'text': 'recurso',
+        
+      },
+    ];
+    fetch.mockResolvedValue(data);
+    return Api.validateLinks(data).then((res) => {
+      expect(res).toEqual(output);
+    });
+  });
+  it('Debe retornar mensaje de error No status', () => {
+    const outputError = [
+      {
+        'href': 'https://www.youtub',
+        'file': 'C:/Users/Laboratoria/erika/Md-links/DEV001-md-links/archivoPrueba/segundoArchivoP/prueba2.md',
+        'status': `Fail ${error.message}`,
+        'message': 'No status',
+        'text': 'recurso',
+      },
+    ];
+    fetch.mockResolvedValue(dataError);
+    return Api.validateLinks(dataError).then((res) => {
+      expect(res).toEqual(outputError);
+    })
+  });
+});

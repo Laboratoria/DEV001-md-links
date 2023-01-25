@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");
-
+const colors = require('colors');
 
 
 //Devuelve true si el path es absoluto sino false.
@@ -88,7 +88,7 @@ const pathFileMd = (pathReceived) => {
 //Validar links
 const validateLinks = (arrLinks) => {
   const arrLinksStatus = arrLinks.map((link) => {
-    return fetch(link.href)
+   return fetch(link.href)
       .then((resultLink) => {
         const statusData = {
           href: link.href,
@@ -96,12 +96,11 @@ const validateLinks = (arrLinks) => {
           status: resultLink.status,
           message:
             resultLink.status > 199 && resultLink.status < 400 ? "OK" : "Fail",
-          text: link.text.slice(0, 50),
+          text: link.text,
         };
         console.log(statusData)
         return statusData;
-      })
-      .catch((error) => {
+      }).catch((error) => {
         const statusDataErr = {
           href: link.href,
           file: link.file,
@@ -109,10 +108,11 @@ const validateLinks = (arrLinks) => {
           message: "No status",
           text: link.text
         };
+        console.log(statusDataErr)
         return statusDataErr;
       });
-  }); console.log('todas promise',arrLinksStatus)
-  return Promise.all(arrLinksStatus);
+    }); 
+    return Promise.all(arrLinksStatus);
 };
 
 module.exports = {
