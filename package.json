@@ -29,7 +29,7 @@
   "author": "Erika Duarte",
   "license": "ISC",
   "bin": {
-    "execute": "index.js"
+    "md-links": "cli.js"
   },
   "bugs": {
     "url": "https://github.com/ErikaDUARTEm/DEV001-md-links/issues"
@@ -38,6 +38,7 @@
   "dependencies": {
     "colors": "^1.4.0",
     "jest": "^29.3.1",
+    "node-emoji": "^1.11.0",
     "node-fetch": "^2.6.8",
     "nodemon": "^2.0.20"
   }

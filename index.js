@@ -16,12 +16,10 @@ const mdLinks = (pathReceived, options) => {
           }else{
             let arrayFiles = Promise.all(arrayPaths.map((file) => Api.readFiles(file)
             .then((resp)=> resp).catch((error)=> console.log(`Ah ocurrido un ${error}`))));
-            resolve(arrayFiles);
             if (options.validate === false){
               resolve(arrayFiles);
               } else if(options.validate === true){ // Validate ===true
-              let array = Api.validateLinks(arrayFiles);
-              console.log('array linea 24 mdlinks',array)
+              let array = arrayFiles.then(links => Api.validateLinks(links.flat()));
               resolve(array)
               }  
           }

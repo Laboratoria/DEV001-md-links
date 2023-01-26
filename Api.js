@@ -98,7 +98,6 @@ const validateLinks = (arrLinks) => {
             resultLink.status > 199 && resultLink.status < 400 ? "OK" : "Fail",
           text: link.text,
         };
-        console.log('statusData',statusData)
         return statusData;
       }).catch((error) => {
         const statusDataErr = {
