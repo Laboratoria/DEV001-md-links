@@ -16,7 +16,7 @@ if(options.length === 1) {
             console.log(promise.flat())
     })
     .catch((error) => {
-        console.log(error .red .inverse);  
+        console.log(error .red );  
     });
 }else {
     if(validate && stats){
@@ -28,7 +28,7 @@ if(options.length === 1) {
             console.log(brokenLinks(promise) .red)
     })
     .catch((error) => {
-        console.log(error .red .inverse);
+        console.log(error .red );
     });
     }else if (validate) {
         mdLinks(userPath, {validate:true})
@@ -42,7 +42,7 @@ if(options.length === 1) {
             console.log(`Bienvenid@ a Md-Links` .bgMagenta)
             console.log(totalLinks(resp))
             console.log(uniqueLinks(resp))
-        }).catch((error)=>console.log(error .red .inverse))
+        }).catch((error)=>console.log(error .red ))
         
     }
 }

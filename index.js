@@ -1,4 +1,5 @@
 const Api = require('./Api.js');
+const fetch = require("node-fetch");
 
 //Funcion mdLinks
 const mdLinks = (pathReceived, options) => {
@@ -13,17 +14,16 @@ const mdLinks = (pathReceived, options) => {
           if(arrayPaths === 0){
             reject('No existen archivos con extensión .Md')
           }else{
-            const links2 = Promise.all(arrayPaths.map((file) => Api.readFiles(file)
-            .then((resp)=> {
-              if (options && options.validate === false){
-                resolve(resp)
-                }else { // Validate ===true
-                const array = resp;
-                const arrayLinks = Api.validateLinks(array)
-                resolve(arrayLinks)
-                }
-              }).catch((error)=> error)
-            ));              
+            let arrayFiles = Promise.all(arrayPaths.map((file) => Api.readFiles(file)
+            .then((resp)=> resp).catch((error)=> console.log(`Ah ocurrido un ${error}`))));
+            resolve(arrayFiles);
+            if (options.validate === false){
+              resolve(arrayFiles);
+              } else if(options.validate === true){ // Validate ===true
+              let array = Api.validateLinks(arrayFiles);
+              console.log('array linea 24 mdlinks',array)
+              resolve(array)
+              }  
           }
         }
       } else {
