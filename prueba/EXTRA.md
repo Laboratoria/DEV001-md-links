@@ -27,7 +27,7 @@ Tienes estas opciones:
 2.1. Haz la "Parte Opcional" [(Hacker Edition)](README.md#parte-opcional-hacker-edition).
 Enfócate en los dos puntos principales: _cargar la data usando [`fetch`](https://developer.mozilla.org/es/docs/Web/API/Fetch_API)_
 y/o _agregar gráficas con [`Chart.js`](https://www.chartjs.org/)
-o [`Google Charts`](https://developers.google.com/chart/)_. Si ya hiciste esto,
+o [`Google Charts`](https://developers.google.com/chrt/)_. Si ya hiciste esto,
 pasa a las siguientes opciones (obviamente).
 
 2.2. Si quieres explorar un poco más sobre el Diseño de Experiencia de Usuario
