@@ -1,10 +1,10 @@
-const { existsSync, isAbsolute, isDirectoryorfile, returnOnlyFilesMd, readFileLinksValidated, readFile } = require('./index.js')
+const { existsSync, isAbsolute, isDirectoryorfile, returnOnlyFilesMd, getAllLinks, validatedLinks } = require('./index.js')
 
 const mdLinks = (route, options) => {
   //resolve(resuelto) cuando se resuelve la promesa, y reject no,relacionado al then y catch, resolve y reject son callback,son funciones!! 
   return new Promise((resolve, reject) => {
-  const pathAbsolute = isAbsolute(route);
-  const root = isDirectoryorfile(pathAbsolute);
+    const pathAbsolute = isAbsolute(route);
+    const root = isDirectoryorfile(pathAbsolute);
     //estamos devolviendo una promesa, en este caso usamos reject
     if (!existsSync(pathAbsolute)) {
       reject(`${route} This path does not exist`);
@@ -14,19 +14,30 @@ const mdLinks = (route, options) => {
     let files;
     if (root === 'file') {
       files = returnOnlyFilesMd(pathAbsolute);
-     resolve (files);
+      //resolve(files);
+      //console.log(files);
     };
-      const promises = files.map(files => options.validate ? readFileLinksValidated(files) : readFile(files));
-      console.log(promises,'hola');
-      return Promise.all(promises)
-        .then(res => resolve([...res].flat(1)))
-        .catch(reject);
+    const arrayAll = files.map(file => getAllLinks(file));
+    resolve(arrayAll);
+    // console.log(promises,'hola');
+
+
+    //return Promise.all(promises)
+    // .then(res => resolve([...res].flat(1)))
+    // .catch(reject);
   });
 };
-mdLinks('./README.md');
+   const prom = mdLinks('./README.md',{validate:true});
+   const prom2 = prom.then(res => {
+    console.log(res);
+    return 5
+   });
+   
+   prom2.then(res =>{
+    console.log(res,'prom2');
+   })
 
 module.exports = {
   mdLinks
-
 };
 

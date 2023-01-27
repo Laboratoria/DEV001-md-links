@@ -24,20 +24,9 @@ const isFile = (routeFile) => {
 };
 // console.log(isFile('Readme.md'));
 
-// const folderPath = (folPath) => fs.readdirSync(folPath);
-//console.log(folderPath('/Users/gaba/Documents/GABA/BOOTCAMP LABORATORIA /PROYECTOS/DEV001-md-links/DEV001-md-links/Prueba'));
-//const folderPathJoin = (folPath, routeFile) => path.join(folPath, routeFile);
-// const readDirectory = folderPath(isAbsolute(folPath))
-// .map(file => isAbsolute(folderPathJoin(folPath, routeFile)));
-
-// el metodo path.join une todos los seg de ruta, si la cadena es de long 0 devolverá '.'
-
-// .filter(isFile);
-
 //console.log(folderPathJoin('/Users/gaba/Documents/GABA/BOOTCAMP LABORATORIA /PROYECTOS/DEV001-md-links/DEV001-md-links/Prueba'));
 
-
-//guardamos los archivos en un array y sino ejecute la funcion folderPath
+//guardamos los archivos en un array sino lea si es un directorio
 const arrayForFiles = (routeFile) => {
     let arrayOnlyFiles = [];
     if (isFile(routeFile)) {
@@ -45,6 +34,7 @@ const arrayForFiles = (routeFile) => {
     } else {
         const folderPath = fs.readdirSync(routeFile);
         folderPath.map((file) => {
+            // el metodo path.join une todos los seg de ruta, si la cadena es de long 0 devolverá '.'
             const folderPathJoin = path.join(routeFile, file);
             arrayOnlyFiles = [...arrayOnlyFiles, ...(arrayForFiles(folderPathJoin))];
         })
@@ -54,31 +44,11 @@ const arrayForFiles = (routeFile) => {
 //console.log(arrayForFiles('./Readme.md'));
 
 //función para devolver la extensión de la ruta
-// ejemplo route='index.md' devuelve 'md'
 const returnOnlyFilesMd = (routeFile) => {
     return arrayForFiles(routeFile).filter((file => path.extname(file) === '.md'));
 };
-//let arrayForFilesMd = [];
-// if (arrayForFiles(routeFile).length === 0) {
-//     return (`There are no '.md' files in ${routeFile}`)
-// } else if (arrayForFiles(routeFile) === 'file') {
-//     arrayForFiles(routeFile).filter(path.extname(route) === '.md');
-//     return arrayForFilesMd.push(routeFile);
-// }
-// return arrayForFilesMd;
 //console.log(returnOnlyFilesMd('/Users/gaba/Documents/GABA/BOOTCAMP LABORATORIA /PROYECTOS/DEV001-md-links/DEV001-md-links/Prueba'));
-//Debemos crear un array que nos traiga todos los href,text,file
 
-// const readFile = (route) => {
-//     return new Promise ((resolve,reject) => {
-//         fs.readFile(route, 'utf8',(err, data)=>{
-//             if(err) { 
-//                 reject('Error: file not found');
-//         }
-//          resolve(data);
-//     });
-// });
-// };
 const readFile = (route) => fs.readFileSync ( route,'utf8');
 //console.log(readFile('./readme.md'));
 
@@ -109,7 +79,7 @@ const getAllLinks = (route) => {
     };
     return arrayAllLinks;
 };
-console.log(getAllLinks('/Users/gaba/Documents/GABA/BOOTCAMP LABORATORIA /PROYECTOS/DEV001-md-links/DEV001-md-links/README.md'));
+//console.log(getAllLinks('/Users/gaba/Documents/GABA/BOOTCAMP LABORATORIA /PROYECTOS/DEV001-md-links/DEV001-md-links/README.md'));
 //Ahora creamos un array que nos traiga además de los href,text,file, Status, ok o fail
 const validatedLinks = (arrayLinks) => {
     return Promise.all(arrayLinks.map((link => {
@@ -124,7 +94,7 @@ const validatedLinks = (arrayLinks) => {
                 };
                 return data;
             })
-            .cacth((error) => {
+            .catch((error) => {
                 const dataError = {
                     href: link.href,
                     text: link.text,
@@ -137,13 +107,14 @@ const validatedLinks = (arrayLinks) => {
             });
         })));
 };              
-console.log(validatedLinks('/Users/gaba/Documents/GABA/BOOTCAMP LABORATORIA /PROYECTOS/DEV001-md-links/DEV001-md-links/README.md'));
+//console.log(validatedLinks(getAllLinks('./README.md')).then(links => console.log(links)));
 
 module.exports = {
     existsSync,
     isAbsolute,
     isDirectoryorfile,
+    arrayForFiles,
     returnOnlyFilesMd,
-    readFile,
+    getAllLinks,
     validatedLinks 
 }
