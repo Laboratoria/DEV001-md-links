@@ -12,7 +12,7 @@ const verificateFileExist = (filePath) => {
 const checkPath = (filePath) => {
    return (path.isAbsolute(filePath));
 };
-
+/*
 //se resuelve la Ruta como absoluta (se convierte ruta relativa a absoluta)
 const fileAbsolute = (filePath) => {
    const pathAbsolut =  path.resolve(filePath);
@@ -31,12 +31,14 @@ const readFile = (filePath, utf-8) => {
 
 })
 
-
+*/
 
 
 module.exports = {
-fileName
-
+checkPath,
+//fileAbsolute,
+//fileMd,
+//readFile,
 }
 
 
