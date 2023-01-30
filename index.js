@@ -3,10 +3,10 @@ const path = require('path');
 
 const mdLinks = (filePath, option) => {
   return new Promise((resolve, reject) => {
-    //identifica si la ruta existe.
-    const fileExist = fs.existsSync(fileName);
     //se resuelve la ruta como absoluta
     const fileName = path.resolve(filePath);
+    //identifica si la ruta existe.
+    const fileExist = fs.existsSync(fileName);
     if (fileExist) {
       resolve([]);
       //chequear y convertir  a una ruta absoluta.
