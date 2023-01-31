@@ -1,33 +1,124 @@
+/* eslint-disable no-undef */
+const {
+  pathIsAbsolute,
+  pathExists,
+  turnPathAbsolute,
+  isExtensionMd,
+} = require('../functions');
 const { mdLinks } = require('../index');
 
-// describe('mdLinks', () => {
-//   it('should...', () => {
-//     console.log('FIX ME!');
-//   });
-// it('Deberia devolver una promesa', () => {
-//   expect(mdLinks()).reolves.toBe(typeof Promise);
-// });
+// ----------------------------TESTS DE MDLINKS/INDEX.JS-------------------------------------------
+// Test de cuando NO existe la ruta
 describe('mdLinks', () => {
-  it('Debe rechazar cuando el path no exixte', () => (mdLinks('/path/noexiste.md')).catch((error) => {
+  it('Debe rechazar cuando el path no exixte', () => mdLinks('/path/noexiste.md').catch((error) => {
     expect(error).toStrictEqual(new Error('La ruta no existe'));
   }));
 });
-
+// Test sobre el reject : error no es md
 describe('mdLinks', () => {
-  it('Debe indicar si la ruta es absoluta o no', () => mdLinks('C:/Users/adria/Desktop/Laboratoria/DEV001-md-links/prueba/ejemplo.md').then((value) => {
-    expect(value).toEqual(true);
+  it('Sale error si el archivo no es ext .md', () => mdLinks('./prueba/ejemplo.html').catch((error) => {
+    expect(error).toEqual(new Error('No es un archivo .md'));
   }));
 });
-
-describe('mdLinks', () => {
-  it('Si la ruta es relativa cambia a absoluta', () => mdLinks('./prueba/ejemplo.md').then((value) => {
-    expect(value).toEqual('C:\\Users\\adria\\Desktop\\Laboratoria\\DEV001-md-links\\prueba\\ejemplo.md');
-  }));
-});
-
-
+// Test sobre el resolve : si es md .....
 // describe('mdLinks', () => {
-//   it('Debe ver si la ruta es absoluta o no', () => pathIsAbsolute('C:/Users/adria/Desktop/Laboratoria/DEV001-md-links/prueba/ejemplo.md').then((value) => {
-//     expect(value).toBe(turnPathAbsolute());
+// it('Resuelve si el archivo tiene ext .md', () => mdLinks('./prueba/ejemplo.md').then((value) => {
+//     expect(value).toEqual(true);
 //   }));
 // });
+
+// Test de si esta leyendo el archivo
+describe('mdLinks', () => {
+  it('Resuelve LEYENDO el archivo', () => mdLinks('./prueba/ejemplo.md').then((value) => {
+    expect(value).toEqual('hola si se muestra el archivo');
+  }));
+});
+
+// -------------------------------TESTS DE FUNCTIONS.JS--------------------------------------------
+// Test cuando SI existe la ruta
+describe('pathExists: cuando SI existe RUTA', () => {
+  it('Debe indicar TRUE cuando si existe ruta', () => {
+    pathExists(
+      'C:/Users/adria/Desktop/Laboratoria/DEV001-md-links/prueba/ejemplo.md',
+    );
+    expect(
+      pathExists(
+        'C:/Users/adria/Desktop/Laboratoria/DEV001-md-links/prueba/ejemplo.md',
+      ),
+    ).toEqual(true);
+  });
+});
+// Test cuando NO existe la ruta
+describe('pathExists: cuando NO existe', () => {
+  it('Debe indicar FALSE cuando no existe la ruta', () => {
+    pathExists('');
+    expect(pathExists('')).toEqual(false);
+  });
+});
+// Test cuando la ruta SI es absoluta
+describe('pathIsAbsolute: cuando SI es absoluta', () => {
+  it('Debe indicar TRUE cuandoo SI es absoluta', () => {
+    pathIsAbsolute(
+      'C:/Users/adria/Desktop/Laboratoria/DEV001-md-links/prueba/ejemplo.md',
+    );
+    expect(
+      pathIsAbsolute(
+        'C:/Users/adria/Desktop/Laboratoria/DEV001-md-links/prueba/ejemplo.md',
+      ),
+    ).toEqual(true);
+  });
+});
+// Test cuando la ruta NO es absoluta
+describe('pathIsAbsolute: cuando NO es absoluta', () => {
+  it('Debe indicar FALSE cuando NO es absoluta', () => {
+    pathIsAbsolute('prueba/ejemplo.md');
+    expect(pathIsAbsolute('prueba/ejemplo.md')).toEqual(false);
+  });
+});
+
+// Test cuando la ruta es absoluta la deja igual/no la convierte
+describe('turnPathAbsolute: Cuando es absoluta la deja igual', () => {
+  it('Cuando la ruta es absoluta la deja igual', () => {
+    turnPathAbsolute(
+      'C:\\Users\\adria\\Desktop\\Laboratoria\\DEV001-md-links\\prueba\\ejemplo.md',
+    );
+    expect(
+      turnPathAbsolute(
+        'C:\\Users\\adria\\Desktop\\Laboratoria\\DEV001-md-links\\prueba\\ejemplo.md',
+      ),
+    ).toEqual(
+      'C:\\Users\\adria\\Desktop\\Laboratoria\\DEV001-md-links\\prueba\\ejemplo.md',
+    );
+  });
+});
+// Test cuando la ruta es relativa la cambia a absoluta
+describe('turnPathAbsolute: la ruta relativa la cambia a absoluta', () => {
+  it('Cuando la ruta es relativa la cambia a absoluta', () => {
+    turnPathAbsolute('./prueba/ejemplo.md');
+    expect(turnPathAbsolute('./prueba/ejemplo.md')).toEqual(
+      'C:\\Users\\adria\\Desktop\\Laboratoria\\DEV001-md-links\\prueba\\ejemplo.md',
+    );
+  });
+});
+
+// Test cuando el archivo SI tiene extension md
+describe('isExtensionMd : Si archivo tiene extension md', () => {
+  it('Devuelve TRUE si el arvhivo tiene extension .md', () => {
+    isExtensionMd('./prueba/ejemplo.md');
+    expect(isExtensionMd('./prueba/ejemplo.md')).toEqual(true);
+  });
+});
+// Test opcion 2 del test de arriba, cuando el archivo SI tiene extension md
+describe('mdLinks', () => {
+  it('Resuelve si el archivo tiene ext .md', () => {
+    mdLinks('./prueba/ejemplo.md');
+    expect(isExtensionMd('./prueba/ejemplo.md')).toEqual(true);
+  });
+});
+// Test cuando el archivo NO tiene extension md
+describe('isExtensionMd : El archivo NO tiene extension md', () => {
+  it('Devuelve FALSE si el arvhivo NO tiene extension .md', () => {
+    isExtensionMd('./prueba/ejemplo.html');
+    expect(isExtensionMd('./prueba/ejemplo.html')).toEqual(false);
+  });
+});
