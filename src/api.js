@@ -8,17 +8,16 @@ const verificateFileExist = (filePath) => {
 */
 
 //se valida si la ruta es relativa o absoluta.
-
-//const checkPath = (filePath) => {
- //  return (path.isAbsolute(filePath));
-//};
-
 //se resuelve la Ruta como absoluta (se convierte ruta relativa a absoluta)
-const fileAbsolute = (filePath) => {
-   return  (path.resolve(filePath));
-
-};
-/*
+const convertToAbsolute = (filePath) => {
+   if (path.isAbsolute(filePath)) {
+      return filePath;
+   }else{
+      const absolutePath= (path.join(process.cwd(), filePath));
+      return absolutePath;
+   }
+   };
+   
 //validar si es un archivo md
 const fileMd = (filePath) => {
    return (path.extname(filePath) === ".md");
@@ -26,19 +25,16 @@ const fileMd = (filePath) => {
 
 //Leer archivo (comprobar si tiene links)
 
-const readFile = (filePath, utf-8) => {
-   return (fs.readFileSync)
+const readFile = (filePath, utf_8) => {
+   return (fs.readFileSync);
 
-})
-
-*/
+};
 
 
 module.exports = {
-//checkPath,
-fileAbsolute,
-//fileMd,
-//readFile,
+   convertToAbsolute,
+   fileMd,
+   readFile,
 }
 
 

@@ -1,39 +1,43 @@
 const path = require('path')
 const apiJs = require('../src/api')
-/*
-//test de función checkPath
 
-describe('checkPath', () => {
 
-    const absPath = 'C:\Users\Januhary Gonzalez\Desktop\MD-Links\DEV001-md-links\filesExamples\no-links.md';
-    const relativePath = 'filesExamples\with-links.md';
 
-    it('Debería ser una función', () => {
-        expect(typeof apiJs.checkPath).toBe('function');
-    });
-
-    it('debería retornar false si la ruta no es relativa', () => {
-        expect(apiJs.checkPath(absPath)).toBe(false);
-    });
-
-    it('debería retornar false si la ruta no es absoluta', () => {
-        expect(apiJs.checkPath(relativePath)).toBe(false);
-    });
-});
-*/
-//test de función fileAbsolute
-
-describe ('fileAbsolute', () =>  {
+describe('convertToAbsolute', () => {
 
     const absPath = "C:\\Users\\Januhary Gonzalez\\Desktop\\MD-Links\\DEV001-md-links\\filesExamples\\with-links.md";
-    const relativePath = "./filesExamples/no-links.md";
 
     it('Debería ser una función', () => {
-        expect(typeof apiJs.fileAbsolute).toBe('function');
+        expect(typeof apiJs.convertToAbsolute).toBe('function');
     });
 
     it('Debería devolver una ruta absoluta', () => {
-        expect(apiJs.fileAbsolute(absPath)).toBe(absPath);
+        expect(apiJs.convertToAbsolute(absPath)).toBe(absPath);
+    });
+    it('Debería devolver una ruta absoluta desde una relativa', () => {
+        const relativeSegment = ['hola', 'soyUnaRutaRelativ']
+        const relativePath = './' + relativeSegment.join(path.sep);
+        const expected = process.cwd() + path.sep + relativeSegment.join(path.sep);
+        expect(apiJs.convertToAbsolute(relativePath)).toBe(expected);
+    });
+})
+
+//test de función fileMd
+/*
+describe('fileMd', () => {
+    const absPath = "C:\\Users\\Januhary Gonzalez\\Desktop\\MD-Links\\DEV001-md-links\\filesExamples\\with-links.md";
+    const absPath1 = "C:\Users\Januhary Gonzalez\Desktop\MD-Links\DEV001-md-links\filesExamples\no-links.md";
+    it('Debería ser una función', () => {
+        expect(typeof apiJs.fileMd).toBe('function');
     });
 
+    it('Debería ser una ruta que contengan links MD', () => {
+        expect(typeof apiJs.fileMd(absPath)).toBe('true');
+    });
+
+    it('Debería ser una ruta que no contengan links MD', () => {
+        expect(typeof apiJs.fileMd(absPath1)).toBe('false');
+    });
 })
+
+*/
