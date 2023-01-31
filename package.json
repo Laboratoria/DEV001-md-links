@@ -8,5 +8,29 @@
     "createdAt": "2022-11-16T21:49:06.371Z",
     "version": "5.4.0",
     "commit": "14aeca030be012fc987dcb1c604bbbcb0fdd325e"
+  },
+  "description": "## Índice",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^27.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Keixys/DEV001-md-links-kei.git"
+  },
+  "author": "Keixys",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Keixys/DEV001-md-links-kei/issues"
+  },
+  "homepage": "https://github.com/Keixys/DEV001-md-links-kei#readme",
+  "dependencies": {
+    "axios": "^1.2.5"
   }
 }
