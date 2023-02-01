@@ -7,12 +7,13 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
   if (pathExists(path)) {
     const pathAbsolute = turnPathAbsolute(path);
     if (isExtensionMd(pathAbsolute)) {
-      const arrayLinks = getLinks(pathAbsolute);
-      if (arrayLinks) {
-        resolve(arrayLinks);
-      } else {
-        reject(new Error('Path does not have links'));
-      }
+      getLinks(pathAbsolute).then((arrayLinks) => {
+        if (arrayLinks.length !== 0) {
+          resolve(arrayLinks);
+        } else {
+          reject(new Error('Path does not have links'));
+        }
+      });
     } else {
       reject(new Error('Path is not an extension file .md'));
     }
