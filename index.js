@@ -4,13 +4,16 @@ const {
   isFileMd,
   isDirectory,
   searchFilesMd,
-} = require('./functionsPath.js');
-const { readAllFilesMds } = require('./functionsLinks.js')
+  getLinks,
+  validateLinks,
+} = require("./functions.js");
 
 const mdLinks = (path, options) =>
   new Promise((resolve, reject) => {
     // variable que contendrá el arreglo de archivos md
     let files;
+    let links;
+    let arrValidateLinks;
     // identificar si la ruta existe
     if (!pathExist(path)) {
       // si no existe la ruta, rechaza la promesa
@@ -30,9 +33,32 @@ const mdLinks = (path, options) =>
         if (files.length === 0) {
           return reject(`Esta ruta no contiene archivos md: ${pathAbsolute}`);
         } else {
-          const result = readAllFilesMds(files);
-          console.log(result)
-          
+          Promise.all([getLinks(files)]).then((res) => {
+            links = res.flat();
+            if (links.length === 0) {
+              return reject(
+                `No se encontraron links en el archivo con ruta: ${pathAbsolute}`
+              );
+            } else {
+              resolve(links);
+              console.log(
+                `Estos son los links encontrados en: ${pathAbsolute}`,
+                links
+              );
+              if (options === "unfined") {
+                return resolve(links);
+              } else if (options === "validate") {
+                Promise.all([validateLinks(links)]).then((res) => {
+                  arrValidateLinks = res.flat();
+                  resolve(arrValidateLinks);
+                  console.log(
+                    `A continuación se muestra el status de los links encontrados en: ${pathAbsolute}`,
+                    arrValidateLinks
+                  );
+                });
+              }
+            }
+          });
         }
       }
     }
