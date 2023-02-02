@@ -4,7 +4,7 @@
 
 //Comprobar la extension del archivo y ver si es .md
 // import fs from 'fs';
-const { comprobarPath, extensionArchivo, rutaAbsoluta, tipoRuta } = require('./functions.js');
+const { comprobarPath, extensionArchivo, rutaAbsoluta, tipoRuta, obtenerLinks } = require('./functions.js');
 
 
 const mdLinks = (archivo) => {
@@ -28,6 +28,12 @@ const mdLinks = (archivo) => {
                 return reject(`El archivo no es un archivo markdown`)
             }
             //AQUÍ VAN LAS FUNCIONES
+
+            const catchLinks = obtenerLinks(examplePath)
+            resolve(catchLinks)
+
+
+
 
             // const infoLinks = obtenerLinks(examplePath)
             // {return resolve(route)}

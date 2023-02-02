@@ -20,29 +20,30 @@ const rutaAbsoluta = (archivo) => {
 }
 
 const lectorDatos = (archivo) => {
-    console.log(fs.readFileSync(archivo, 'utf-8'));
+    return fs.readFileSync(archivo, 'utf-8');
 }
 
 // readingFiles es lectorDatos
 const obtenerLinks = (archivo) => {
     return new Promise((resolve, reject) => {
         const links = [];
-        lectorDatos(archivo).then((file) => {
-                const regex = /\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g;
-                let match = regex.exec(file);
-                while (match !== null) {
-                    links.push({
-                        href: match[2],
-                        text: match[1],
-                        file: archivo,
-                    });
-                    match = regex.exec(file);
-                }
-                resolve(links);
-                console.log(links);
-            })
-            .catch((error) => reject(error));
-    });
+        const datosNuevos = lectorDatos(archivo)
+
+        const regex = /\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g;
+        let match = regex.exec(datosNuevos);
+
+        while (match !== null) {
+            links.push({
+                href: match[2],
+                text: match[1],
+                file: archivo,
+            });
+            match = regex.exec(datosNuevos);
+        }
+        resolve(links);
+
+    })
+
 }
 
 module.exports = {
@@ -50,6 +51,7 @@ module.exports = {
     extensionArchivo,
     tipoRuta,
     rutaAbsoluta,
+    obtenerLinks,
 
 
 };
