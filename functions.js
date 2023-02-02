@@ -1,5 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
 
 // Verificar SI existe ruta o NO
 const pathExists = (route) => fs.existsSync(route);
@@ -42,30 +44,22 @@ const getLinks = (route) => new Promise((resolve, reject) => {
 // getLinks('C:/Users/adria/Desktop/Laboratoria/DEV001-md-links/prueba/ejemplo.html')
 // .then((res) => console.log('este es de aqui', res));
 
-// Función para validar links
-const validatedLinks = (links) => Promise.all(
-  links.map((link) => fetch(link.href)
-    .then((result) => {
-      const file = {
-        href: link.href,
-        text: link.text,
-        file: link.file,
-        status: result.status,
-        message: result.ok ? 'ok' : 'fail',
-      };
-      return file;
-    })
-    .catch((error) => {
-      const fileError = {
-        href: link.href,
-        text: link.text,
-        file: link.file,
-        status: `Fail ${error.message}`,
-        message: 'No status',
-      };
-      return fileError;
-    })),
-);
+// Función para validar links con axios
+const array = [
+  {
+    href: 'https://raw.githubusercontent.com/programminghistorian/jekyll/gh-pages/es/lecciones/introduccion-a-bash.md',
+    text: 'description',
+    file: 'C:\\Users\\adria\\Desktop\\Laboratoria\\DEV001-md-links\\prueba\\ejemplo.md',
+  },
+];
+const getLinkStatus = (urls) => Promise.all(urls.map((link) => axios.get(link.href)
+  .then((respuesta) => ({ ...link, status: respuesta.status, message: 'ok' }))
+  // console.log(respuesta);
+
+  .catch((error) => ({ ...link, status: error.response.status, message: 'Fail' }))));
+  // console.log(error.response.status);
+// getLinkStatus(array).then((resolve) => console.log((resolve)));
+
 // Practica de función para guardar los links en un array
 const createArray = (route) => {
   const mdArray = [];
@@ -83,6 +77,7 @@ module.exports = {
   readFiles,
   createArray,
   getLinks,
+  getLinkStatus,
 };
 
 // /\[.*\]\(.*\)/g
