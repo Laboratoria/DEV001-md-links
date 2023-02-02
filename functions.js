@@ -1,6 +1,6 @@
-const fs = require("fs");
-const { readFile } = require("fs/promises");//Promesa 
-const path = require("path");
+const fs = require('fs');
+const { readFile } = require('fs/promises'); //Promesa
+const path = require('path');
 
 // identifica si la ruta existe o no
 const pathExist = (param) => fs.existsSync(param);
@@ -13,7 +13,7 @@ const getAbsolutePath = (paths) => {
 // chequear si la extensión corresponde a un archivo md
 const isFileMd = (pathAbsolute) => {
   const filePath = path.extname(pathAbsolute);
-  if (filePath === ".md") {
+  if (filePath === '.md') {
     return true;
   }
   return false;
@@ -23,8 +23,9 @@ const isFileMd = (pathAbsolute) => {
 const isDirectory = (pathAbsolute) => fs.statSync(pathAbsolute).isDirectory();
 
 // función para leer el directorio buscando archivos md
-let arrayFilesMd = [];
+let arrayFilesMd;
 const searchFilesMd = (param) => {
+  arrayFilesMd = [];
   if (!isDirectory(param) && isFileMd(param)) {
     arrayFilesMd.push(param);
   } else {
@@ -44,7 +45,6 @@ const searchFilesMd = (param) => {
   }
   return arrayFilesMd;
 };
-
 
 // obtener los links dentro del archivo md
 const getLinks = (pathsMd) => {
@@ -75,7 +75,8 @@ const getLinks = (pathsMd) => {
 // Validando los links
 const validateLinks = (links) => {
   const linksValidated = links.map((link) => {
-    return fetch(link.href).then((res) => {
+    return fetch(link.href)
+      .then((res) => {
         if (res.status >= 200 && res.status <= 299) {
           return {
             href: link.href,
@@ -95,19 +96,18 @@ const validateLinks = (links) => {
         }
       })
       .catch((error) => {
-         return {
-            href: link.href,
-            text: link.text,
-            file: link.file,
-            OK: 'Fail',
-            status: error.message,
-            message: error.cause,
-          };
+        return {
+          href: link.href,
+          text: link.text,
+          file: link.file,
+          OK: 'Fail',
+          status: error.message,
+          message: error.cause,
+        };
       });
   });
   return Promise.all(linksValidated);
 };
-
 
 module.exports = {
   pathExist,
@@ -116,5 +116,5 @@ module.exports = {
   searchFilesMd,
   isDirectory,
   getLinks,
-  validateLinks
+  validateLinks,
 };

@@ -1,7 +1,9 @@
 const { mdLinks } = require('./index.js');
 
-mdLinks('./readme.md', 'validate')
-  .then(() => {})
+mdLinks('./test/pruebaTest.md', 'validate')
+  .then((res) => {
+    console.log(res);
+  })
   .catch((error) => {
     console.log(error);
   });

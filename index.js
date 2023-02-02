@@ -6,7 +6,7 @@ const {
   searchFilesMd,
   getLinks,
   validateLinks,
-} = require("./functions.js");
+} = require('./functions.js');
 
 const mdLinks = (path, options) =>
   new Promise((resolve, reject) => {
@@ -40,21 +40,12 @@ const mdLinks = (path, options) =>
                 `No se encontraron links en el archivo con ruta: ${pathAbsolute}`
               );
             } else {
-              resolve(links);
-              console.log(
-                `Estos son los links encontrados en: ${pathAbsolute}`,
-                links
-              );
-              if (options === "unfined") {
+              if (options === "undefined") {
                 return resolve(links);
               } else if (options === "validate") {
                 Promise.all([validateLinks(links)]).then((res) => {
                   arrValidateLinks = res.flat();
                   resolve(arrValidateLinks);
-                  console.log(
-                    `A continuación se muestra el status de los links encontrados en: ${pathAbsolute}`,
-                    arrValidateLinks
-                  );
                 });
               }
             }
