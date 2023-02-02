@@ -4,6 +4,8 @@ const {
   pathExists,
   turnPathAbsolute,
   isExtensionMd,
+  readFiles,
+  getLinks,
 } = require('../functions');
 const { mdLinks } = require('../index');
 
@@ -11,13 +13,13 @@ const { mdLinks } = require('../index');
 // Test de cuando NO existe la ruta
 describe('mdLinks', () => {
   it('Debe rechazar cuando el path no exixte', () => mdLinks('/path/noexiste.md').catch((error) => {
-    expect(error).toStrictEqual(new Error('La ruta no existe'));
+    expect(error).toStrictEqual(new Error('Path does not exist'));
   }));
 });
 // Test sobre el reject : error no es md
 describe('mdLinks', () => {
   it('Sale error si el archivo no es ext .md', () => mdLinks('./prueba/ejemplo.html').catch((error) => {
-    expect(error).toEqual(new Error('No es un archivo .md'));
+    expect(error).toEqual(new Error('Path is not an extension file .md'));
   }));
 });
 // Test sobre el resolve : si es md .....
@@ -27,12 +29,6 @@ describe('mdLinks', () => {
 //   }));
 // });
 
-// Test de si esta leyendo el archivo
-describe('mdLinks', () => {
-  it('Resuelve LEYENDO el archivo', () => mdLinks('./prueba/ejemplo.md').then((value) => {
-    expect(value).toEqual('hola si se muestra el archivo');
-  }));
-});
 
 // -------------------------------TESTS DE FUNCTIONS.JS--------------------------------------------
 // Test cuando SI existe la ruta
@@ -122,3 +118,29 @@ describe('isExtensionMd : El archivo NO tiene extension md', () => {
     expect(isExtensionMd('./prueba/ejemplo.html')).toEqual(false);
   });
 });
+// Test readfiles de si esta leyendo el archivo
+describe('readFiles', () => {
+  it('Resuelve LEYENDO el archivo', () => readFiles('./prueba/ejemplosinliks.md').then((value) => {
+    expect(value).toEqual(
+      'Hola este es un ejemplo sin links',
+    );
+  }));
+});
+
+// Test getLinks
+const array = [
+  {
+    href: 'https://raw.githubusercontent.com/programminghistorian/jekyll/gh-pages/es/lecciones/introduccion-a-bash.md',
+    text: 'description',
+    file: 'C:/Users/adria/Desktop/Laboratoria/DEV001-md-links/prueba/ejemplo.md',
+  },
+];
+
+test('getLinks', () => getLinks('C:/Users/adria/Desktop/Laboratoria/DEV001-md-links/prueba/ejemplo.md')
+  .then((data) => expect(data).toEqual(array)));
+
+// Test de getLinkStatus
+// test("getLinkStatus", () =>
+//   getLinkStatus(
+//    'https://raw.githubusercontent.com/programminghistorian/jekyll/gh-pages/es/lecciones/introduccion-a-bash.md'
+//   ).then((data) => expect(data).toEqual(array)));
