@@ -1,6 +1,11 @@
 const {
   pathExists, turnPathAbsolute, isExtensionMd, getLinks, getLinkStatus,
 } = require('./functions');
+const {
+  totalLinks,
+  uniqueLinks,
+  brokenLinks,
+} = require('./cli_stats.js');
 
 // funcion mdLinks con Angie
 // const mdLinks = (path, options) => new Promise((resolve, reject) => {
@@ -33,6 +38,15 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
   getLinks(pathAbsolute).then((arrayLinks) => {
     if (arrayLinks.length === 0) {
       reject(new Error('Path does not have links'));
+    }
+    if (options.validate === false) {
+      // const stats = {
+      //   Total: totalLinks(arrayLinks),
+      //   Unique: uniqueLinks(arrayLinks),
+      //   Broken: brokenLinks(arrayLinks),
+      // };
+      resolve(arrayLinks);
+      // resolve(stats);
     }
     getLinkStatus(arrayLinks).then((response) => {
       resolve(response);
