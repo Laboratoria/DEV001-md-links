@@ -51,12 +51,12 @@ const getLinks = (text) => text.match(expression);
 
 const verifyUrl = (links,absoPath) => {
   const arrayObjLink = links.map((link) => {
-   //console.log(link)
+   console.log(link)
    // console.log(axios.get(link))
     return axios.get(link)
     .then((resp) => {
       // console.log(arrayObjLink)
-      return arrayObjLink , {
+      return {
         href: link,
         text: 'cuando yo pueda de que va el link',
         file: absoPath,
@@ -70,14 +70,14 @@ const verifyUrl = (links,absoPath) => {
         text: 'cuando yo pueda de que va el link',
         file: absoPath,
         status: 404,
-        ok: 'Not Found',
+        ok: 'FAIL',
       
       }
     })
 
   })
 
-  return Promise.all(arrayObjLink);
+ return Promise.all(arrayObjLink);
 
 }
 

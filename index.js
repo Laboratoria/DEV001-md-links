@@ -13,7 +13,7 @@ const mdLinks = (path, options) => {
     let searchFile = searchMD(absolutePath)
     console.log(searchFile)
     // tomar cada archivo md
-    searchFile.map((url) => {
+    searchFile.forEach((url) => {
     console.log(url)
       //leer el archivo 
       const fileReadPromise = readFile(url)
@@ -50,11 +50,7 @@ const mdLinks = (path, options) => {
   // Promise.all(promiseArray).then((objLinks) => resolve(objLinks))
 };
 
-
-
-;
-
-mdLinks('./test', { validate: true })
+mdLinks('./prueba', { validate: false})
   .then((path) => {
     console.log(path)
   }).catch((error) => {
@@ -62,5 +58,5 @@ mdLinks('./test', { validate: true })
   })
 
 module.exports = () => {
-  // ...
+  mdLinks
 };
