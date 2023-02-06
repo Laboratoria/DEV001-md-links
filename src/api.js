@@ -24,17 +24,26 @@ const fileMd = (filePath) => {
 };
 
 //Leer archivo (comprobar si tiene links)
-
-const readFile = (filePath, utf_8) => {
-   return (fs.readFileSync);
-
+const readLinks = (filePath) => {
+   const file = fs.readFileSync(filePath, 'utf-8');
+   const newLinksMd = [];
+   const regularExpression = /\[([^\[]+)\](\(.*\))/gm;
+   //si el archivo contiene Links debe retornar un array de links
+   if (file.match(regularExpression) === null) {
+      return false;
+   }else if (file) {
+      file.match(regularExpression).forEach((links) => {
+         newLinksMd.push(links);
+      });
+   }
+return newLinksMd;
 };
 
 
 module.exports = {
    convertToAbsolute,
    fileMd,
-   readFile,
+   readLinks,
 }
 
 
