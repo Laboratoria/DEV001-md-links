@@ -40,9 +40,9 @@ const mdLinks = (path, options) =>
                 `No se encontraron links en el archivo con ruta: ${pathAbsolute}`
               );
             } else {
-              if (options === "undefined") {
+              if (options === false) {
                 return resolve(links);
-              } else if (options === "validate") {
+              } else if (options === true) {
                 Promise.all([validateLinks(links)]).then((res) => {
                   arrValidateLinks = res.flat();
                   resolve(arrValidateLinks);

@@ -10,18 +10,68 @@ const {
 const { mdLinks } = require('../index.js');
 const tryPathAbsolute = `${process.cwd()}`;
 const tryPathTest = [`${tryPathAbsolute}\\test\\pruebaTest.md`];
+const fetch = require('node-fetch');
+jest.mock('node-fetch');
 
 describe('mdLinks', () => {
-  it('should...', () => {
-    console.log('FIX ME!');
-  });
   it('Debería devolver una promesa', () => {
-    expect(mdLinks('./test/pruebaTest.md')).toBe(typeof Promise);
+    mdLinks('./test/pruebaTest.md', true).then(() => {
+      expect(mdLinks('./test/pruebaTest.md', true)).toBe(typeof Promise);
+    });
   });
   it('Debería rechazar la promesa si el path no existe', () => {
     mdLinks('./estepathnoexiste.md').catch((error) => {
     expect(error).toBe('Esta ruta no existe: ./estepathnoexiste.md');
   })});
+  it('Debería retornar true si el path existe', () => {
+    mdLinks(`${tryPathAbsolute}\\test`);
+    expect(pathExist(`${tryPathAbsolute}\\test`)).toEqual(true);
+  });
+  it('Debería devolver una promesa', async () => {
+    mdLinks('./test/pruebaTest.md', true).then(async () => {
+      const arrayLinksValidated = [
+        {
+          href: 'https://www.javascripttutorial.net/javascript-dom/javascript-innerhtml-vs-createelement/',
+          text: 'Diferencia entre createElement e innerHTML',
+          file: `${tryPathAbsolute}\\test\\pruebaTest.md`,
+          status: 200,
+          OK: 'OK'
+        },
+        {
+          href: 'https://www.todojs.com/tipos-datos-javascript-es6/',
+          text: 'Diferencia entre datos atómicos y estructurados',
+          file: `${tryPathAbsolute}\\test\\pruebaTest.md`,
+          status: 200,
+          OK: 'OK'
+        }
+      ];
+      fetch.mockImplementationOnce(() => 
+      Promise.resolve({
+        status: 200,
+        OK: 'OK'
+      })
+      );
+      return await validateLinks(arrayLinksValidated).then((res) => {
+        expect(res).toEqual([
+          {
+            href: 'https://www.javascripttutorial.net/javascript-dom/javascript-innerhtml-vs-createelement/',
+            text: 'Diferencia entre createElement e innerHTML',
+            file: `${tryPathAbsolute}\\test\\pruebaTest.md`,
+            status: 200,
+            OK: 'OK'
+          },
+          {
+            href: 'https://www.todojs.com/tipos-datos-javascript-es6/',
+            text: 'Diferencia entre datos atómicos y estructurados',
+            file: `${tryPathAbsolute}\\test\\pruebaTest.md`,
+            status: 200,
+            OK: 'OK'
+          }
+        ]);
+      });
+      expect(mdLinks('./test/pruebaTest.md', true)).toEqual();
+    });
+  });
   it('Debería rechazar la promesa si el path no es ni un directorio ni un archivo md', () => {
     mdLinks('./thumb.png').catch((error) => {
     expect(error).toBe(`Esta ruta no es una carpeta ni un archivo md: ${tryPathAbsolute}\\thumb.png`);
@@ -37,17 +87,10 @@ describe('mdLinks', () => {
 });
 
 /* --------------------------------------------- testeo de functions -----------------------------------------------------*/
-
-describe('pathExist', () => {
-  it('Debería retornar true si el path existe', () => {
-    pathExist(`${tryPathAbsolute}\\thumb.png`);
-    expect(pathExist(`${tryPathAbsolute}\\thumb.png`)).toEqual(true);
-  });
-});
-describe('getAbsolutePath', () => {
-  it('Debería retornar la ruta absoluta al recibir una ruta relativa', () => {
-    getAbsolutePath('./thumb.png');
-    expect(getAbsolutePath('./thumb.png')).toEqual(`${tryPathAbsolute}\\thumb.png`);
+describe('should...', () => {
+  it('Debería retornar una ruta absoluta si la ruta ingresada es relativa', () => {
+    mdLinks('./test');
+    expect(getAbsolutePath('./test')).toEqual(`${tryPathAbsolute}\\test`);
   });
 });
 describe('isFileMd', () => {
@@ -86,7 +129,7 @@ describe('getLinks', () => {
         file: `${tryPathAbsolute}\\test\\pruebaTest.md`
       }
     ];
-    return getLinks([`${tryPathAbsolute}\\test\\pruebaTest.md`]).then((res) => {
+    return getLinks([tryPathTest]).then((res) => {
       expect(res).toEqual(linksForTest);
     });
   });

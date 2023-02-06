@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { readFile } = require('fs/promises'); //Promesa
 const path = require('path');
+//const fetch = require('node-fetch');
 
 // identifica si la ruta existe o no
 const pathExist = (param) => fs.existsSync(param);
