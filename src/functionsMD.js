@@ -1,15 +1,17 @@
 const fs = require('fs');
 const path = require('node:path');
 const axios = require('axios');
-const { url } = require('inspector');
 
-
+//si la ruta existe
 const findPath = (route) => fs.existsSync(route);
 // si la ruta es un directorio
 const theDirectory = (route) => fs.statSync(route).isDirectory();
+// si es un archivo md
 const archiveMD = (route) => path.extname(route);
+//si es una carpeta
 const MdFile = (file) => path.extname(file);
 
+//convertir el path en absoluto
 const pathAbsolute = (route) => {
   if (!path.isAbsolute(route)) {
     return path.resolve(route);
@@ -17,6 +19,7 @@ const pathAbsolute = (route) => {
   return route;
 }
 
+// burcar los archivos md
 const searchMD = (route) => {
   let allFiles = []
   if (!theDirectory(route)) {
@@ -33,9 +36,7 @@ const searchMD = (route) => {
   })
 }
 
-//const arr = searchMD.toString()
-
-
+//leer cada link
 const readFile = (route) => {
   return new Promise((resolve, reject) => {
     fs.readFile(route, 'utf-8', (error, text) => {
@@ -46,51 +47,51 @@ const readFile = (route) => {
     });
   });
 };
-const expression = /(https:\/\/)[a-zA-z0-9-_.]+\/[a-zA-z0-9-_./]+/g;
+
+const expression = /(https?:\/\/)[a-zA-z0-9-_.]+\/?[a-zA-z0-9-_./]+/g;
 const getLinks = (text) => text.match(expression);
 
-const verifyUrl = (links,absoPath) => {
+//validar el url true
+const verifyUrl = (links, absoPath) => {
   const arrayObjLink = links.map((link) => {
-   console.log(link)
-   // console.log(axios.get(link))
+    //console.log(link)
+    // console.log(axios.get(link))
     return axios.get(link)
-    .then((resp) => {
-      // console.log(arrayObjLink)
-      return {
-        href: link,
-        text: 'cuando yo pueda de que va el link',
-        file: absoPath,
-        status: resp.status,
-        ok: resp.statusText,
-      }
-    })
-    .catch(()=>{
-      return{
-        href: link,
-        text: 'cuando yo pueda de que va el link',
-        file: absoPath,
-        status: 404,
-        ok: 'FAIL',
-      
-      }
-    })
+      .then((resp) => {
+        // console.log(arrayObjLink)
+        return {
+          href: link,
+          text: 'cuando yo pueda de que va el link',
+          file: absoPath,
+          status: resp.status,
+          ok: resp.statusText,
+        }
+      })
+      .catch(() => {
+        return {
+          href: link,
+          text: 'cuando yo pueda de que va el link',
+          file: absoPath,
+          status: 404,
+          ok: 'FAIL',
 
+        }
+      })
   })
-
- return Promise.all(arrayObjLink);
-
+  return Promise.all(arrayObjLink).then((result) => result);
 }
 
-const verifyUrlFalse = (links,absoPath) => {
+//verificar el url falso 
+const verifyUrlFalse = (links, absoPath) => {
   const arrayObjLink = links.map((link) => {
-      return {
-        href: link,
-        text: 'cuando yo pueda de que va el link',
-        file: absoPath,
-      }
-    })
-    return arrayObjLink
-  }
+    return {
+      href: link,
+      text: 'cuando yo pueda de que va el link',
+      file: absoPath,
+    }
+  })
+  return arrayObjLink
+}
 
 // const verifyUrl = (url, route) => {
 //   // console.log(url)
