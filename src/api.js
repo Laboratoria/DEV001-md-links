@@ -12,40 +12,55 @@ const verificateFileExist = (filePath) => {
 const convertToAbsolute = (filePath) => {
    if (path.isAbsolute(filePath)) {
       return filePath;
-   }else{
-      const absolutePath= (path.join(process.cwd(), filePath));
+   } else {
+      const absolutePath = (path.join(process.cwd(), filePath));
       return absolutePath;
    }
-   };
-   
+};
+
 //validar si es un archivo md
 const fileMd = (filePath) => {
    return (path.extname(filePath) === ".md");
 };
 
 //Leer archivo (comprobar si tiene links)
-const readLinks = (filePath) => {
-   const file = fs.readFileSync(filePath, 'utf-8');
+const readFile = (filePath) => new Promise((resolve, reject) => {
+   fs.readFile(filePath, 'utf-8', (error, data) => {
+      if (error) {
+         reject(error);
+      } else {
+         resolve(data);
+      }
+   });
+});
+
+//obtener links
+const getLinks = (filePath) => new Promise((resolve, reject) => {
    const newLinksMd = [];
-   const regularExpression = /\[([^\[]+)\](\(.*\))/gm;
-   //si el archivo contiene Links debe retornar un array de links
-   if (file.match(regularExpression) === null) {
-      return false;
-   }else if (file) {
-      file.match(regularExpression).forEach((links) => {
-         newLinksMd.push(links);
-      });
-   }
-return newLinksMd;
-};
+   readFile(filePath).then((data) => {
+      const regularExpression = /\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g;
+      const match = regularExpression.exec(data);
+      //si el archivo contiene Links debe retornar un array de links
+      while (match = ! null) {
+         newLinksMd.push({
+            href: match[1],
+            text: match[2],
+            file: filePath,
+         });
+         match = regularExpression.exec(data);
+      }
+      resolve(newLinksMd);
+   })
+      .catch((error) => reject(error));
+});
 
 
 module.exports = {
    convertToAbsolute,
    fileMd,
-   readLinks,
+   readFile,
+   getLinks,
 }
-
 
 
 
