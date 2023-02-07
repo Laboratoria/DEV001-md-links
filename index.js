@@ -4,7 +4,7 @@
 
 //Comprobar la extension del archivo y ver si es .md
 // import fs from 'fs';
-const { comprobarPath, extensionArchivo, rutaAbsoluta, tipoRuta, obtenerLinks } = require('./functions.js');
+const { comprobarPath, extensionArchivo, rutaAbsoluta, tipoRuta, obtenerLinks, validarLink } = require('./functions.js');
 
 
 const mdLinks = (archivo) => {
@@ -29,8 +29,25 @@ const mdLinks = (archivo) => {
             }
             //AQUÍ VAN LAS FUNCIONES
 
-            const catchLinks = obtenerLinks(examplePath)
-            resolve(catchLinks)
+            // obtenerLinks(examplePath).then(arreglodelinks => validarLinks(arreglodelinks).then(resolve)).catch(error => reject("porque obtenerlinks fallo"))
+
+
+            obtenerLinks(examplePath)
+                .then(linkRespuesta => {
+                    // console.log(linkRespuesta, 'linkres')
+
+                    const arrayPromesa = validarLink(linkRespuesta)
+
+                    Promise.all(arrayPromesa)
+                        .then(rest => {
+                            rest
+                            console.log(rest, 'prueba')
+                            resolve(examplePath)
+                        })
+                        .catch()
+
+
+                })
 
 
 
@@ -42,7 +59,7 @@ const mdLinks = (archivo) => {
             //TODO: hacer muuuchas cosas
             //si está todo ok uso el resolve() me paso al then y al catch
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             reject(error)
         }
     })
@@ -69,7 +86,7 @@ mdLinks(`Links\\ejemplo-1.md`).then((exito) => {
 //     console.log(files)
 // });
 
-module.exports = { mdLinks, };
+module.exports = { mdLinks };
 
 // return new Promise((resolve, reject) => {
 //     let examplePath = archivo
