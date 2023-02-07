@@ -1,6 +1,11 @@
 {
-  "name": "md-links",
+  "name": "januha88-mdLinks",
   "version": "0.1.0",
+  "description": "modulo para validar archivos md",
+  "main": "index.js",
+  "bin": {
+    "mdLinks": "./index.js"
+  },
   "engines": {
     "node": ">=16.x"
   },
@@ -8,5 +13,40 @@
     "createdAt": "2022-11-16T21:49:06.371Z",
     "version": "5.4.0",
     "commit": "14aeca030be012fc987dcb1c604bbbcb0fdd325e"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch":  "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Januha88/DEV001-md-links.git"
+  },
+  "keywords": [
+    "markdown",
+    "links"
+  ],
+  "author": {
+    "name": "Januhary Gonzalez",
+    "mail": "januharyg@gmail.com",
+    "url": "https://www.linkedin.com/in/januhary-gonzalez/"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Januha88/DEV001-md-links/issues"
+  },
+  "homepage": "https://github.com/Januha88/DEV001-md-links#readme",
+  "dependencies": {
+    "jest": "^29.3.1",
+    "axios": "^1.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.31.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.4"
   }
 }
