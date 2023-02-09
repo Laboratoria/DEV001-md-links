@@ -42,8 +42,8 @@ const getLinks = (filePath) => new Promise((resolve, reject) => {
       //si el archivo contiene Links debe retornar un array de links
       while (match != null) {
          newLinksMd.push({
-            href: match[1],
-            text: match[2],
+            href: match[2],
+            text: match[1],
             file: filePath,
          });
          match = regularExpression.exec(data);
