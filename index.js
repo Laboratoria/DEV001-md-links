@@ -4,19 +4,20 @@
 
 //Comprobar la extension del archivo y ver si es .md
 // import fs from 'fs';
-const { comprobarPath, extensionArchivo, rutaAbsoluta, tipoRuta, obtenerLinks, validarLink } = require('./functions.js');
+const { comprobarPath, extensionArchivo, rutaAbsoluta, obtenerLinks, validarLink } = require('./functions.js');
 
 
 const mdLinks = (archivo) => {
     return new Promise((resolve, reject) => {
         try {
 
-            let examplePath = archivo
+            const examplePath = rutaAbsoluta(archivo);
 
-            if (!tipoRuta(examplePath)) {
-                examplePath = rutaAbsoluta(examplePath)
 
-            }
+            // if (!tipoRuta(examplePath)) {
+            //     examplePath = rutaAbsoluta(examplePath)
+
+            // }
 
             const isRealFile = comprobarPath(examplePath)
             if (!isRealFile) {
@@ -32,32 +33,21 @@ const mdLinks = (archivo) => {
             // obtenerLinks(examplePath).then(arreglodelinks => validarLinks(arreglodelinks).then(resolve)).catch(error => reject("porque obtenerlinks fallo"))
 
 
-            obtenerLinks(examplePath)
-                .then(linkRespuesta => {
-                    // console.log(linkRespuesta, 'linkres')
+            const linksObtenidos = obtenerLinks(examplePath)
 
-                    const arrayPromesa = validarLink(linkRespuesta)
+            // console.log(linkRespuesta, 'linkres')
 
-                    Promise.all(arrayPromesa)
-                        .then(rest => {
-                            rest
-                            console.log(rest, 'prueba')
-                            resolve(examplePath)
-                        })
-                        .catch()
+            const arrayPromesa = validarLink(linksObtenidos)
 
-
+            Promise.all(arrayPromesa)
+                .then(rest => {
+                    rest
+                    console.log(rest, 'prueba')
+                    resolve(examplePath)
                 })
+                .catch()
 
 
-
-
-            // const infoLinks = obtenerLinks(examplePath)
-            // {return resolve(route)}
-
-            //si llegué aki, el archivo es un markdown
-            //TODO: hacer muuuchas cosas
-            //si está todo ok uso el resolve() me paso al then y al catch
         } catch (error) {
             // console.log(error)
             reject(error)
@@ -66,17 +56,17 @@ const mdLinks = (archivo) => {
 
 }
 
-mdLinks(`Links\\ejemplo-1.md`).then((exito) => {
-    // D:\\LABORATORIA\\MD-Links\\DEV001-md-links\\Links\\ejemplo-1.md
-    console.log(exito);
+// mdLinks(`Links\\ejemplo-1.md`).then((exito) => {
+//     // D:\\LABORATORIA\\MD-Links\\DEV001-md-links\\Links\\ejemplo-1.md
+//     console.log(exito);
 
 
 
 
-}).catch((error) => {
-    console.log(error)
+// }).catch((error) => {
+//     console.log(error)
 
-})
+// })
 
 
 // fs.readdir('./', (error, files) => {
