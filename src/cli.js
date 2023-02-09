@@ -1,7 +1,5 @@
-const { mdLinks } = require('../index');
+const { mdLinks } = require('./index');
 
-mdLinks('./filesExamples/with-links.md', { validate: true }).then((links) => {
-  console.log(links);
-}).catch((error) => {
-  console.log(error);
-});
+mdLinks('./filesExamples/with-links.md', { validate: true })
+  .then((respuesta) => console.log(respuesta))
+  .catch((error) => console.error(error));

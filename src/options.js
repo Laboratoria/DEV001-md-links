@@ -1,35 +1,13 @@
 const axios = require('axios');
 
 
-const getStatus = (linksArray) => {
-    //se crea arreglo que contendrá las promesas
-    const promisesArr = [];
-    // se recorre con map el array de links
-    promisesArr = linksArray.map((link) => axios.get(link.href))
-    .then((response)=>{
-        if(response.ok){
-            return {
-                ...link,
-                status: response.status,
-                message: 'ok'
-            }
-        }
+const getStatus = (links) => Promise.all(links.map((link) => axios.get(link.href)
+    .then((respuesta) => {
+       // console.log(respuesta.status);
+        return { ...link, status: respuesta.status, ok: respuesta.statusTxt };
     })
-    .catch(() =>{
-        return{
-            ...link,
-            status: 'NO FAIL',
-            message: 'NOT FOUND'
-        }
-    })
-    return Promise.all(promisesArr);
-}
- getStatus(linksArray)
- .then((resolve) => 
- console.log(resolve));
+    .catch((error) => ({ ...link, status: error.status, message: 'NOT FOUND' }))));
 
 
 
-    module.exports = {
-getStatus
-    }
+module.exports = { getStatus }
