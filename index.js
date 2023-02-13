@@ -1,5 +1,4 @@
-const { file } = require('@babel/types');
-const { findPath, pathAbsolute, searchMD, readFile, verifyUrl, verifyUrlFalse } = require('./src/functionsMD.js')
+const { findPath, pathAbsolute, searchMD, verifyUrl, getLinks} = require('./src/functionsMD.js')
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
@@ -8,52 +7,42 @@ const mdLinks = (path, options) => {
       //sino existe la ruta se termina la promesa
       reject('No existe la ruta')
     }
-    //convertir la rut en absoluta
+    //convertir la ruta en absoluta
     const absolutePath = pathAbsolute(path)
     // buscar si hay un archivos md
     let searchFile = searchMD(absolutePath)
-    // console.log('entrando a searchFile',searchFile)
-    // tomar cada archivo md
-    let arrPromise = []
-    searchFile.forEach((url) => {
-      // console.log('cada url del ForEach',url)
-      //leer el archivo 
-      const fileReadPromise = readFile(url)
-      // console.log('antes de entrar al then',fileReadPromise)
-      console.log(url)
-      //leer la promesa del readFile
-      fileReadPromise.then((links) => {
-        // console.log('dentro del then',fileReadPromise)
-        //console.log(typeof links)
-        //verificar la url
-        if (options.validate === false) {
-          // console.log(verifyUrlFalse(links, url))
-          resolve(verifyUrlFalse(url))
-
-        }
-        //console.log(verifyUrl(links, url))
-        verifyUrl(links, url).then((linkVerify)=> resolve( linkVerify))
-   
-
-
-      })
-      //const promise = fileMd.then((result)=> result)
-
-      //console.log('lo que deberia retornar',fileMd)
-//console.log(arrPromise)
+    // tomar cada route 
+    const linksPromise = searchFile.flatMap((file) => {
+      return getLinks(file)
     })
-    //arrPromise.then((result)=> console.log(result))
-    //resolve(arrPromise)
-    resolve(arrPromise)
+
+    // tomar toda la promesa y tomar cada array
+    Promise.all(linksPromise).then((result) => {
+        //con el flat() lo volvemos todo uno 
+         const arrObj = result.flat()
+         //Si es Falso devuelve el objeto con {href,file,text}
+         if (options.validate === false) {
+           resolve(arrObj)
+         }
+        //si es True devuelve el objeto con {href,file,text, status,message}
+         else if (options.validate === true) {
+       //leemos la promera de verifyUrl
+           verifyUrl(arrObj).then(result => {
+           
+            resolve(result)
+           })
+         }
+    })
   })
 };
+
 
 mdLinks('./prueba', { validate: true })
   .then((path) => {
     //console.log("el then de mdlinks", path)
-    console.log(path)
+     console.log(path)
   }).catch((error) => {
-    console.log(error)
+     console.log(error)
   })
 
 module.exports = () => {
